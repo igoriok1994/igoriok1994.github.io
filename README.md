@@ -2,7 +2,7 @@
 
 Single-page personal CV built with **React** and **Vite** and deployed on **GitHub Pages**.
 
-Live: `https://igoriok1994.github.io/`
+[Live: `https://igoriok1994.github.io/`](https://igoriok1994.github.io/)
 
 ## 🛠 Tech stack
 
