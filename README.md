@@ -2,7 +2,7 @@
 
 A minimalist single-page website that hosts and displays my personal CV/Resume.
 
-Live: [https://igoriok1994.github.io/](https://igoriok1994.github.io/)
+Live: [https://igoriok1994.github.io/](https://igoriok1994.github.io/) or [https://cv.nextjs.lt/](https://cv.nextjs.lt/)
 
 ## 🛠 Features
 
