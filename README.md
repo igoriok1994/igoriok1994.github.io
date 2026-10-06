@@ -1,20 +1,15 @@
-# Personal CV – Igor V.
+# Igor Vilghelm — CV & Portfolio
 
-A minimalist single-page website that hosts and displays my personal CV/Resume.
+Personal CV website built with **Astro**, **React**, and **Tailwind CSS**.
 
-Live: [https://igoriok1994.github.io/](https://igoriok1994.github.io/) or [https://cv.nextjs.lt/](https://cv.nextjs.lt/)
+## Quick Start
 
-## 🛠 Features
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # Output in dist/
+```
 
-- **Embedded PDF Viewer:** Seamlessly displays the resume directly in the browser.
-- **Mobile Friendly:** Automatically provides a direct download link for mobile browsers that do not support inline PDF viewing.
-- **Lightweight:** Built with pure HTML and CSS for instant loading.
+## Content
 
-## 📁 Repository Structure
-
-- `index.html` – The main entry point containing the viewer layout.
-- `cv.pdf` – The actual resume file.
-
-## 🚀 Deployment
-
-Hosted entirely on **GitHub Pages**. Any changes pushed to the `main` (or `master`) branch are automatically deployed.
+Edit [`src/data/cv.ts`](src/data/cv.ts) to update personal info, experience, skills, and projects.

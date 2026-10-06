@@ -1,0 +1,290 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { cvData } from '../data/cv';
+import { 
+  Briefcase, 
+  MapPin, 
+  ArrowRight, 
+  FileDown, 
+  Layers, 
+  Sparkles, 
+  Award, 
+  CheckCircle2 
+} from 'lucide-react';
+
+const { personal, metrics, achievements, projects, skillGroups } = cvData;
+const featuredProjects = projects.slice(0, 3);
+---
+
+<Layout title={`${personal.name} | Senior Full-Stack Developer & Team Lead`}>
+  <div class="space-y-16 md:space-y-24">
+    
+    {/* Hero Section */}
+    <section class="flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-8 md:gap-12 pt-4">
+      <div class="flex-1 space-y-6 text-center md:text-left">
+        
+        {/* Availability Badge */}
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Open to Senior Engineering Roles</span>
+        </div>
+
+        <div class="space-y-2">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            Hi, I'm <span class="text-transparent bg-clip-text bg-linear-to-r from-indigo-600 via-indigo-500 to-cyan-500">{personal.name}</span>
+          </h1>
+          <p class="text-lg sm:text-xl font-medium text-slate-600 dark:text-slate-300">
+            {personal.title}
+          </p>
+          <div class="flex items-center justify-center md:justify-start gap-2 text-xs text-slate-500 dark:text-slate-400 pt-1">
+            <MapPin className="w-3.5 h-3.5 text-indigo-500" />
+            <span>{personal.location}</span>
+            <span>•</span>
+            <span>8+ Years in Production</span>
+          </div>
+        </div>
+
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+          {personal.about.summary}
+        </p>
+
+        {/* Action Buttons */}
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
+          <a
+            href="/cv"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm shadow-indigo-600/30 transition-all hover:-translate-y-0.5"
+          >
+            <Briefcase className="w-4 h-4" />
+            <span>View Full CV</span>
+            <ArrowRight className="w-4 h-4 ml-0.5" />
+          </a>
+
+          <a
+            href="/projects"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-0.5 shadow-2xs"
+          >
+            <Layers className="w-4 h-4 text-indigo-500" />
+            <span>Featured Projects</span>
+          </a>
+
+          <a
+            href={personal.pdfUrl}
+            download="Igor_Vilghelm_CV.pdf"
+            class="no-print inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+          >
+            <FileDown className="w-4 h-4" />
+            <span>Download PDF</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Avatar / Photo */}
+      <div class="relative shrink-0">
+        <div class="relative w-40 h-40 sm:w-52 sm:h-52 md:w-60 md:h-60 rounded-3xl p-1 bg-linear-to-tr from-indigo-500 via-cyan-400 to-indigo-600 shadow-xl shadow-indigo-500/10">
+          <img
+            src={personal.avatarUrl}
+            alt={personal.name}
+            class="w-full h-full object-cover rounded-[22px] bg-slate-200 dark:bg-slate-800"
+            loading="eager"
+          />
+        </div>
+        {/* Subtle decorative badge */}
+        <div class="absolute -bottom-3 -right-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2.5 shadow-md flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+          <Award className="w-4 h-4 text-amber-500" />
+          <span>Team Lead</span>
+        </div>
+      </div>
+    </section>
+
+    {/* Key Metrics Grid */}
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Engineering Impact & Scale
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {metrics.map((metric) => (
+          <div class="glow-card bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/90 dark:border-slate-800/90 space-y-2">
+            <div class="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-cyan-500">
+              {metric.value}
+            </div>
+            <div class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">
+              {metric.label}
+            </div>
+            <div class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 leading-snug">
+              {metric.description}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* About & Engineering Philosophy */}
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-5 space-y-4">
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+          <Sparkles className="w-4 h-4" />
+          <span>Profile & Background</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+          Architecting High-Load, Mission-Critical Systems
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Specializing in enterprise-scale systems where reliability, sub-second latency, and clean code are vital for operations.
+        </p>
+      </div>
+
+      <div class="lg:col-span-7 space-y-4 bg-white dark:bg-slate-900/60 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800">
+        {personal.about.details.map((paragraph) => (
+          <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            {paragraph}
+          </p>
+        ))}
+      </div>
+    </section>
+
+    {/* Key Achievements Highlights */}
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Key Milestones
+        </h2>
+        <a href="/cv#achievements" class="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
+          <span>View all 11 achievements</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {achievements.slice(0, 4).map((item) => (
+          <div class="flex items-start gap-3 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+            <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              {item}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* Featured Projects Preview */}
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <div>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Selected Works
+          </h2>
+          <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+            Featured Projects
+          </h3>
+        </div>
+        <a
+          href="/projects"
+          class="text-xs sm:text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1"
+        >
+          <span>All {projects.length} Projects</span>
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {featuredProjects.map((project) => (
+          <div class="glow-card bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 flex flex-col justify-between space-y-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+                  {project.category}
+                </span>
+                <span class="text-slate-400 dark:text-slate-500">
+                  {project.period}
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white leading-snug">
+                {project.title}
+              </h4>
+              <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+
+            <div class="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800/80">
+              <div class="flex flex-wrap gap-1.5">
+                {project.tags.slice(0, 3).map((tag) => (
+                  <span class="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                    {tag}
+                  </span>
+                ))}
+                {project.tags.length > 3 && (
+                  <span class="text-[10px] px-1.5 py-0.5 rounded-md text-slate-400">
+                    +{project.tags.length - 3}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* Technical Skill Groups Preview */}
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Core Technologies & Competencies
+        </h2>
+        <a href="/cv#skills" class="text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1">
+          <span>Full Skills Matrix</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {skillGroups.slice(0, 3).map((group) => (
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 space-y-3">
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              <span>{group.name}</span>
+            </h4>
+            <div class="flex flex-wrap gap-1.5">
+              {group.skills.map((skill) => (
+                <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* Bottom CTA Banner */}
+    <section class="p-8 sm:p-10 rounded-3xl bg-linear-to-r from-indigo-900 to-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl border border-indigo-700/40">
+      <div class="space-y-2 text-center md:text-left">
+        <h3 class="text-xl sm:text-2xl font-bold">
+          Interested in working together or discussing an opportunity?
+        </h3>
+        <p class="text-xs sm:text-sm text-indigo-200 max-w-xl">
+          Based in Vilnius, Lithuania. Available for local and international remote opportunities.
+        </p>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <a
+          href="/contact"
+          class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-white text-slate-900 hover:bg-slate-100 shadow-sm transition-all"
+        >
+          Get in Touch
+        </a>
+        <a
+          href={personal.pdfUrl}
+          download="Igor_Vilghelm_CV.pdf"
+          class="no-print px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-800/80 hover:bg-indigo-700 text-white border border-indigo-500/30 transition-all"
+        >
+          Download PDF
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Layout>

@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { cvData } from '../data/cv';
+import CopyButton from '../components/CopyButton';
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  FileDown, 
+  Globe, 
+  ArrowUpRight 
+} from 'lucide-react';
+import { GithubIcon, LinkedinIcon, TelegramIcon } from '../components/SocialIcons';
+
+const { personal } = cvData;
+---
+
+<Layout title={`Contact | ${personal.name}`}>
+  <div class="max-w-4xl mx-auto space-y-12">
+    
+    {/* Page Header */}
+    <div class="text-center space-y-3">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/40 text-xs font-semibold">
+        <Globe className="w-3.5 h-3.5" />
+        <span>Get In Touch</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 dark:text-white">
+        Let's Connect
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-xl mx-auto leading-relaxed">
+        Whether you are discussing senior full-stack roles, system architecture challenges, or potential collaboration, feel free to reach out directly.
+      </p>
+    </div>
+
+    {/* Primary Contact Cards Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      {/* Email Card */}
+      <div class="glow-card bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between">
+          <div class="p-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-900/50">
+            <Mail className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+          </div>
+          <CopyButton client:load text={personal.contacts.email} label="Copy Email" />
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Email Address
+          </span>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">
+            <a href={`mailto:${personal.contacts.email}`} class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+              {personal.contacts.email}
+            </a>
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Direct inbox. Responses usually within 24 hours.
+          </p>
+        </div>
+      </div>
+
+      {/* Phone Card */}
+      <div class="glow-card bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xs">
+        <div class="flex items-center justify-between">
+          <div class="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-900/50">
+            <Phone className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+          </div>
+          <CopyButton client:load text={personal.contacts.phone} label="Copy Phone" />
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Phone / Messaging
+          </span>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">
+            <a href={`tel:${personal.contacts.phone}`} class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              {personal.contacts.phone}
+            </a>
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Available for calls, SMS, WhatsApp & Telegram.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    {/* Social Profiles & Profiles */}
+    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-6">
+      <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        Profiles & Online Presence
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        
+        {/* GitHub */}
+        <a
+          href={personal.contacts.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/60 hover:border-indigo-500/50 flex items-center justify-between group transition-all"
+        >
+          <div class="flex items-center gap-3">
+            <div class="p-2 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white">
+              <GithubIcon className="w-5 h-5" />
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">GitHub</div>
+              <div class="text-[11px] text-slate-500">
+                {personal.contacts.github ? personal.contacts.github.replace('https://github.com/', '@') : '@github'}
+              </div>
+            </div>
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </a>
+
+        {/* LinkedIn */}
+        <a
+          href={personal.contacts.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/60 hover:border-indigo-500/50 flex items-center justify-between group transition-all"
+        >
+          <div class="flex items-center gap-3">
+            <div class="p-2 rounded-xl bg-white dark:bg-slate-800 text-sky-600">
+              <LinkedinIcon className="w-5 h-5" />
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">LinkedIn</div>
+              <div class="text-[11px] text-slate-500">
+                {personal.contacts.linkedin ? personal.contacts.linkedin.replace('https://www.linkedin.com/in/', '').replace(/\/$/, '') : 'Profile'}
+              </div>
+            </div>
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </a>
+
+        {/* Telegram */}
+        <a
+          href={personal.contacts.telegram}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/60 hover:border-indigo-500/50 flex items-center justify-between group transition-all"
+        >
+          <div class="flex items-center gap-3">
+            <div class="p-2 rounded-xl bg-white dark:bg-slate-800 text-sky-500">
+              <TelegramIcon className="w-5 h-5" />
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-900 dark:text-white">Telegram</div>
+              <div class="text-[11px] text-slate-500">
+                {personal.contacts.telegram ? personal.contacts.telegram.replace('https://t.me/', '@') : '@telegram'}
+              </div>
+            </div>
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </a>
+
+      </div>
+    </div>
+
+    {/* Location & Work Terms */}
+    <div class="p-6 sm:p-8 rounded-3xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+          <MapPin className="w-4 h-4" />
+          <span>Location & Timezone</span>
+        </div>
+        <h4 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+          Vilnius, Lithuania (UTC+2 / EET)
+        </h4>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Comfortable working with European (CET/EET) and US overlapping timezones.
+        </p>
+      </div>
+
+      <a
+        href={personal.pdfUrl}
+        download="Igor_Vilghelm_CV.pdf"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition-colors shrink-0"
+      >
+        <FileDown className="w-4 h-4" />
+        <span>Download Full CV (PDF)</span>
+      </a>
+    </div>
+
+  </div>
+</Layout>

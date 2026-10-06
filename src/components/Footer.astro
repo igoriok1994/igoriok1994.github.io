@@ -1,0 +1,138 @@
+---
+import { cvData } from '../data/cv';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, TelegramIcon } from './SocialIcons';
+import PrintButton from './PrintButton';
+
+const currentYear = new Date().getFullYear();
+const { personal, navLinks } = cvData;
+---
+
+<footer class="mt-20 border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-slate-950 transition-colors">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      
+      {/* Col 1: Bio */}
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-linear-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+            IV
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 dark:text-white text-base">
+              {personal.name}
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              {personal.title}
+            </p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
+          {personal.about.summary}
+        </p>
+        <div class="pt-2">
+          <PrintButton client:visible />
+        </div>
+      </div>
+
+      {/* Col 2: Navigation */}
+      <div class="space-y-3">
+        <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Navigation
+        </h5>
+        <ul class="space-y-2 text-xs">
+          {navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a
+              href={personal.pdfUrl}
+              download="Igor_Vilghelm_CV.pdf"
+              class="text-indigo-600 dark:text-indigo-400 font-medium hover:underline inline-flex items-center gap-1"
+            >
+              Original CV (PDF)
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {/* Col 3: Contacts */}
+      <div class="space-y-3">
+        <h5 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          Contacts & Links
+        </h5>
+        <ul class="space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
+          <li class="flex items-center gap-2">
+            <Mail className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+            <a href={`mailto:${personal.contacts.email}`} class="hover:text-indigo-600 dark:hover:text-indigo-400 truncate">
+              {personal.contacts.email}
+            </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <Phone className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+            <a href={`tel:${personal.contacts.phone}`} class="hover:text-indigo-600 dark:hover:text-indigo-400">
+              {personal.contacts.phone}
+            </a>
+          </li>
+          <li class="flex items-center gap-2">
+            <MapPin className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
+            <span>{personal.location}</span>
+          </li>
+        </ul>
+
+        {/* Social Icons */}
+        <div class="flex items-center gap-3 pt-2">
+          {personal.contacts.github && (
+            <a
+              href={personal.contacts.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              aria-label="GitHub"
+            >
+              <GithubIcon className="w-4 h-4" />
+            </a>
+          )}
+          {personal.contacts.linkedin && (
+            <a
+              href={personal.contacts.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              aria-label="LinkedIn"
+            >
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
+          )}
+          {personal.contacts.telegram && (
+            <a
+              href={personal.contacts.telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              aria-label="Telegram"
+            >
+              <TelegramIcon className="w-4 h-4" />
+            </a>
+          )}
+        </div>
+      </div>
+
+    </div>
+
+    {/* Bottom Bar */}
+    <div class="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 dark:text-slate-500 gap-4">
+      <p>© {currentYear} {personal.name}. All rights reserved.</p>
+      <p class="inline-flex items-center gap-1.5">
+        Built with <span class="font-semibold text-slate-700 dark:text-slate-300">Astro</span> + <span class="font-semibold text-slate-700 dark:text-slate-300">React</span> & <span class="font-semibold text-slate-700 dark:text-slate-300">Tailwind CSS</span>
+      </p>
+    </div>
+  </div>
+</footer>

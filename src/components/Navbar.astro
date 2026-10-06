@@ -1,0 +1,129 @@
+---
+import ThemeToggle from './ThemeToggle';
+import { cvData } from '../data/cv';
+import { FileDown, Menu, X } from 'lucide-react';
+
+const currentPath = Astro.url.pathname;
+const navLinks = cvData.navLinks;
+---
+
+<header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      
+      {/* Brand */}
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-linear-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
+          IV
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-sm sm:text-base leading-tight">
+            {cvData.personal.name}
+          </span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-tight">
+            Full-Stack & Team Lead
+          </span>
+        </div>
+      </a>
+
+      {/* Desktop Navigation */}
+      <nav class="hidden md:flex items-center gap-1">
+        {navLinks.map((link) => {
+          const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+          return (
+            <a
+              href={link.href}
+              class={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                isActive
+                  ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 shadow-2xs'
+                  : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
+              }`}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </nav>
+
+      {/* Actions: Theme Toggle & PDF Download */}
+      <div class="hidden sm:flex items-center gap-3">
+        <ThemeToggle client:load />
+
+        <a
+          href={cvData.personal.pdfUrl}
+          download="Igor_Vilghelm_CV.pdf"
+          class="no-print inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all cursor-pointer"
+        >
+          <FileDown className="w-3.5 h-3.5" />
+          <span>Download PDF</span>
+        </a>
+      </div>
+
+      {/* Mobile Menu Button & Mobile Theme Toggle */}
+      <div class="flex items-center gap-2 sm:hidden">
+        <ThemeToggle client:load />
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          aria-label="Toggle mobile menu"
+          class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+        >
+          <Menu className="w-5 h-5" id="menu-icon-open" />
+          <X className="w-5 h-5 hidden" id="menu-icon-close" />
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  {/* Mobile Dropdown Menu */}
+  <div id="mobile-menu" class="hidden sm:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 pt-2 pb-4 space-y-1">
+    {navLinks.map((link) => {
+      const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+      return (
+        <a
+          href={link.href}
+          class={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            isActive
+              ? 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 font-semibold'
+              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`}
+        >
+          {link.label}
+        </a>
+      );
+    })}
+    <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
+      <a
+        href={cvData.personal.pdfUrl}
+        download="Igor_Vilghelm_CV.pdf"
+        class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs"
+      >
+        <FileDown className="w-4 h-4" />
+        <span>Download PDF</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  if (toggleBtn && menu && iconOpen && iconClose) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        iconOpen.classList.add('hidden');
+        iconClose.classList.remove('hidden');
+      } else {
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }
+    });
+  }
+</script>

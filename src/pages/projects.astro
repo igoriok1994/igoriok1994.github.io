@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { cvData } from '../data/cv';
+import ProjectFilter from '../components/ProjectFilter';
+import { Layers, FileDown } from 'lucide-react';
+
+const { personal, projects } = cvData;
+---
+
+<Layout title={`Engineering Projects | ${personal.name}`}>
+  <div class="space-y-10">
+    
+    {/* Page Header */}
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+          <Layers className="w-4 h-4" />
+          <span>Case Studies & Systems</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+          Projects & Architecture
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl">
+          Key enterprise, mobile, SCADA, and AI systems designed and delivered over 8+ years. Filter by domain or search for specific technologies below.
+        </p>
+      </div>
+
+      <a
+        href={personal.pdfUrl}
+        download="Igor_Vilghelm_CV.pdf"
+        class="no-print inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-2xs self-start md:self-auto"
+      >
+        <FileDown className="w-4 h-4 text-indigo-500" />
+        <span>Download Full CV (PDF)</span>
+      </a>
+    </div>
+
+    {/* Interactive React Island */}
+    <ProjectFilter client:load projects={projects} />
+
+  </div>
+</Layout>
