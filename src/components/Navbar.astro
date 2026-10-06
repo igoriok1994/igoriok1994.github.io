@@ -1,7 +1,7 @@
 ---
 import ThemeToggle from './ThemeToggle';
 import { cvData } from '../data/cv';
-import { FileDown, Menu, X } from 'lucide-react';
+import { FileDown, FileText, Menu, X } from 'lucide-react';
 
 const currentPath = Astro.url.pathname;
 const navLinks = cvData.navLinks;
@@ -45,9 +45,19 @@ const navLinks = cvData.navLinks;
         })}
       </nav>
 
-      {/* Actions: Theme Toggle & PDF Download */}
-      <div class="hidden sm:flex items-center gap-3">
+      {/* Actions: Theme Toggle, View PDF & PDF Download */}
+      <div class="hidden sm:flex items-center gap-2.5">
         <ThemeToggle client:load />
+
+        <a
+          href="/pdf"
+          target="_blank"
+          title="Open PDF in browser"
+          class="no-print inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700/70 transition-all cursor-pointer"
+        >
+          <FileText className="w-3.5 h-3.5 text-indigo-500" />
+          <span>View PDF</span>
+        </a>
 
         <a
           href={cvData.personal.pdfUrl}
@@ -55,7 +65,7 @@ const navLinks = cvData.navLinks;
           class="no-print inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs shadow-indigo-600/20 hover:shadow-indigo-600/30 transition-all cursor-pointer"
         >
           <FileDown className="w-3.5 h-3.5" />
-          <span>Download PDF</span>
+          <span>Download</span>
         </a>
       </div>
 
@@ -93,7 +103,15 @@ const navLinks = cvData.navLinks;
         </a>
       );
     })}
-    <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
+    <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-2">
+      <a
+        href="/pdf"
+        target="_blank"
+        class="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"
+      >
+        <FileText className="w-4 h-4 text-indigo-500" />
+        <span>View PDF in Browser</span>
+      </a>
       <a
         href={cvData.personal.pdfUrl}
         download="Igor_Vilghelm_CV.pdf"
