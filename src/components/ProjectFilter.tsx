@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import type { Project } from '../data/cv';
-import { Search, Sparkles, Smartphone, Layers, Server, Calendar, CheckCircle2 } from 'lucide-react';
+import { Search, Sparkles, Smartphone, Layers, Server, Calendar, CheckCircle2, ExternalLink } from 'lucide-react';
 
 interface ProjectFilterProps {
   projects: Project[];
@@ -112,15 +112,40 @@ export default function ProjectFilter({ projects }: ProjectFilterProps) {
                     <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
                       {project.category}
                     </span>
-                    <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">
-                      {project.title}
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      {project.link ? (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors inline-flex items-center gap-1.5 group"
+                        >
+                          <span>{project.title}</span>
+                          <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
+                        </a>
+                      ) : (
+                        <span>{project.title}</span>
+                      )}
                     </h3>
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/70 px-3 py-1 rounded-full self-start sm:self-auto font-medium">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{project.period}</span>
+                <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-800/60 transition-colors"
+                    >
+                      <span>Visit</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  <div className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/70 px-3 py-1 rounded-full font-medium">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{project.period}</span>
+                  </div>
                 </div>
               </div>
 

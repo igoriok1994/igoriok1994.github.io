@@ -34,6 +34,7 @@ export interface Project {
   tags: string[];
   description: string;
   bullets: string[];
+  link?: string;
 }
 
 export interface SkillGroup {
@@ -159,6 +160,7 @@ export const cvData = {
     {
       id: "ai-assistant",
       title: "AI Assistant Backend Service for Web Application",
+      link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2026 – Present",
       category: "AI & LLM",
       tags: ["Node.js", "Fastify", "Ollama", "LM Studio", "LLM", "REST API", "Microservices"],
@@ -172,6 +174,7 @@ export const cvData = {
     {
       id: "mobile-energy",
       title: "Mobile Energy Management System",
+      link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2025 – Present",
       category: "Mobile",
       tags: ["React Native", "Expo", "TypeScript", "Offline-First", "Mobile UX", "REST API"],
@@ -184,6 +187,7 @@ export const cvData = {
     {
       id: "web-energy-maintenance",
       title: "Web Energy Management System – Maintenance & Evolution",
+      link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2020 – Present",
       category: "High-Load & Web",
       tags: ["High-Load", "Oracle", "MariaDB", "Relational DBs", "Performance Tuning"],
@@ -196,6 +200,7 @@ export const cvData = {
     {
       id: "web-energy-development",
       title: "Web Energy Management System – Architecture & Development",
+      link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2017 – Present",
       category: "Enterprise",
       tags: ["React", "Redux", "SCADA SVG", "REST APIs", "Oracle", "MariaDB", "Jenkins", "IoT", "Big Data", "SSO"],
@@ -217,6 +222,7 @@ export const cvData = {
     {
       id: "legacy-support",
       title: "Legacy Web Application Support & Migration",
+      link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2016 – 2018",
       category: "High-Load & Web",
       tags: ["ASP 2.0", "Flash ActionScript 2", "Refactoring", "New features", "Performance", "Legacy Migration", "Troubleshooting"],
