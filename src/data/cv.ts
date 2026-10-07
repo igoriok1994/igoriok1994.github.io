@@ -69,7 +69,7 @@ export const cvData = {
       telegram: "https://t.me/ccg007agent",
     } as ContactInfo,
     about: {
-      summary: "Senior Full-Stack Developer with 8+ years of experience building large-scale web systems for energy metering and data processing.",
+      summary: "Senior Full-Stack Developer with 10+ years of experience building large-scale web systems for energy metering and data processing.",
       details: [
         "Experienced in system architecture, data visualization, cloud deployment, and CI/CD automation. Led development of complex SCADA-like interfaces and backend systems working with high-volume relational databases and complex data models.",
         "Strong focus on performance, clean architecture, and scalable systems.",
@@ -80,24 +80,24 @@ export const cvData = {
 
   metrics: [
     {
-      value: "8+ Years",
+      value: "10+ Years",
       label: "Enterprise Experience",
-      description: "Architecting, developing & maintaining high-load web systems"
+      description: "Architecting, developing & maintaining high-load web systems. In IT since 2016."
     },
     {
       value: "1M+",
       label: "Metering Devices",
-      description: "Real-time automated data processing and monitoring platform"
+      description: "Real-time automated data processing and monitoring platform."
     },
     {
       value: "Per-Second",
       label: "Aggregation Scale",
-      description: "Time-series data engine from per-second to monthly resolutions"
+      description: "Time-series data engine from per-second to monthly resolutions."
     },
     {
       value: "Multi-Region",
       label: "Deployments",
-      description: "National-scale systems across Lithuania, Latvia & Central Asia"
+      description: "National-scale systems across Lithuania, Latvia & Central Asia."
     }
   ] as Metric[],
 
