@@ -113,7 +113,9 @@ export const cvData = {
     "Optimized database queries and backend performance for complex Oracle and MariaDB systems.",
     "Established CI/CD pipelines using Jenkins, improving development and deployment workflows.",
     "Developed a mobile application (React Native) with offline-first capabilities for field engineers.",
-    "Designed and implemented a backend service for AI-powered data querying within the energy management system."
+    "Designed and implemented a backend service for AI-powered data querying within the energy management system.",
+    "Implemented and integrated an AI Assistant interface into the enterprise web frontend, providing automated contextual data summaries, event analysis, and operational recommendations.",
+    "Engineered ML-based anomaly detection and time-series forecasting for metering archives, paired with automated LLM summaries of detected anomalies."
   ],
 
   experience: [
