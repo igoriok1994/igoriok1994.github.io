@@ -115,7 +115,8 @@ export const cvData = {
     "Developed a mobile application (React Native) with offline-first capabilities for field engineers.",
     "Designed and implemented a backend service for AI-powered data querying within the energy management system.",
     "Implemented and integrated an AI Assistant interface into the enterprise web frontend, providing automated contextual data summaries, event analysis, and operational recommendations.",
-    "Engineered ML-based anomaly detection and time-series forecasting for metering archives, paired with automated LLM summaries of detected anomalies."
+    "Engineered ML-based anomaly detection and time-series forecasting for metering archives, paired with automated LLM summaries of detected anomalies.",
+    "Implemented distributed rate-limiting and centralized session management using Redis / Garnet, protecting authentication endpoints from brute-force/DDoS attacks and enabling immediate multi-device token revocation."
   ],
 
   experience: [
@@ -134,6 +135,7 @@ export const cvData = {
             "Coordinate with cross-functional teams (e.g., DevOps, DB) when needed",
             "Monitor progress and ensure timely delivery of features and tasks",
             "Participate in technical decision-making and architecture discussions",
+            "Conducted post-audit security assessments and vulnerability scans using OWASP ZAP, identifying and remediating critical backend security flaws to ensure regulatory compliance",
             "Improve team processes and development workflows",
             "Actively contribute to the codebase (backend & frontend development)"
           ]
@@ -205,12 +207,14 @@ export const cvData = {
       link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2017 – Present",
       category: "Enterprise",
-      tags: ["React", "Redux", "SCADA SVG", "REST APIs", "Oracle", "MariaDB", "Jenkins", "IoT", "Big Data", "SSO"],
+      tags: ["React", "Redux", "SCADA SVG", "REST APIs", "Redis", "Garnet", "OWASP ZAP", "Oracle", "MariaDB", "Jenkins", "IoT", "Big Data", "SSO"],
       description: "Flagship smart metering & automated commercial energy accounting platform with real-time SCADA scheme viewer.",
       bullets: [
         "Led the design and development of a smart metering system for automated commercial energy accounting.",
         "Designed and implemented system architecture (frontend & backend), including reusable component libraries and scalable module structure.",
         "Built a custom component system using React and Redux, enabling consistent UI development across the application.",
+        "Integrated Redis / Garnet for login rate-limiting and server-side session invalidation, safeguarding databases from brute-force lockouts and enforcing global token revocation.",
+        "Conducted security testing and vulnerability remediation with OWASP ZAP post-cybersecurity audit, resolving critical backend security flaws.",
         "Developed and maintained backend endpoints for communication with Oracle and MariaDB databases and data acquisition systems (REST APIs).",
         "Implemented real-time data visualization, including SCADA-like SVG-based interactive scheme viewer & editor with live data binding.",
         "Worked with large-scale data processing, including Big Data and IoT integrations, data analysis, and data visualization pipelines.",
@@ -258,6 +262,9 @@ export const cvData = {
         "Node.js (Fastify)",
         "PHP (Phalcon 5, modern & legacy)",
         "REST API Architecture",
+        "Redis / Garnet (In-Memory Stores)",
+        "Authentication Security & Session Management",
+        "Application Security (OWASP ZAP, Vulnerability Remediation)",
         "High-Load Systems",
         "Real-Time Data Processing",
         "Clean Architecture & Modular Design",
