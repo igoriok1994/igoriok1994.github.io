@@ -207,12 +207,13 @@ export const cvData = {
       link: "https://www.sigmatelas.lt/en/emcos-corporate",
       period: "2017 – Present",
       category: "Enterprise",
-      tags: ["React", "Redux", "SCADA SVG", "REST APIs", "Redis", "Garnet", "OWASP ZAP", "Oracle", "MariaDB", "Jenkins", "IoT", "Big Data", "SSO"],
+      tags: ["React", "Redux", "SCADA SVG", "REST APIs", "Redis", "Garnet", "OWASP ZAP", "CSP", "IIS", "Oracle", "MariaDB", "Jenkins", "IoT", "Big Data", "SSO"],
       description: "Flagship smart metering & automated commercial energy accounting platform with real-time SCADA scheme viewer.",
       bullets: [
         "Led the design and development of a smart metering system for automated commercial energy accounting.",
         "Designed and implemented system architecture (frontend & backend), including reusable component libraries and scalable module structure.",
         "Built a custom component system using React and Redux, enabling consistent UI development across the application.",
+        "Implemented robust Content Security Policy (CSP) rules and hardened IIS security headers to secure frontend assets against client-side injection and cross-site attacks.",
         "Integrated Redis / Garnet for login rate-limiting and server-side session invalidation, safeguarding databases from brute-force lockouts and enforcing global token revocation.",
         "Conducted security testing and vulnerability remediation with OWASP ZAP post-cybersecurity audit, resolving critical backend security flaws.",
         "Developed and maintained backend endpoints for communication with Oracle and MariaDB databases and data acquisition systems (REST APIs).",
@@ -251,6 +252,7 @@ export const cvData = {
         "React Native (Expo)",
         "Redux / State Management",
         "SVG-based SCADA Visualizations",
+        "Web Security Hardening (CSP, CORS, Security Headers)",
         "Responsive & User-Friendly UI",
         "HTML5 / CSS3 / Tailwind"
       ]
