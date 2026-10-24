@@ -27,9 +27,21 @@
 <body>
 
     <iframe 
-        src="https://docs.google.com/gview?url=https://cv.nextjs.lt/cv.pdf&embedded=true" 
-        class="cv-container">
+        id="cv-frame"
+        class="cv-container"
+        title="CV Viewer">
     </iframe>
+
+    <script is:inline>
+      (function() {
+        const origin = window.location.origin;
+        const pdfUrl = `${origin}/cv.pdf`;
+        const frame = document.getElementById('cv-frame');
+        if (frame) {
+          frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`;
+        }
+      })();
+    </script>
 
 </body>
 </html>
