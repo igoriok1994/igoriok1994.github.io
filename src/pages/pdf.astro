@@ -15,30 +15,108 @@
             height: 100%;
             overflow: hidden;
             background-color: #525659;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         .cv-container {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
+        }
+
+        .top-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #1e2227;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            font-size: 13px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .top-banner .title {
+            font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-banner .actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .top-banner a {
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        .top-banner a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .frame-wrapper {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
 
-    <iframe 
-        id="cv-frame"
-        class="cv-container"
-        title="CV Viewer">
-    </iframe>
+    <div class="top-banner">
+        <div class="title">
+            <span>Igor Vilghelm • Curriculum Vitae (PDF)</span>
+        </div>
+        <div class="actions">
+            <a href="/cv.pdf" target="_blank">Открыть напрямую</a>
+            <a href="/cv.pdf" download="Igor_Vilghelm_CV.pdf">Скачать PDF</a>
+            <a href="/">← На сайт</a>
+        </div>
+    </div>
+
+    <div class="frame-wrapper">
+        <iframe 
+            id="cv-frame"
+            class="cv-container"
+            title="CV Viewer">
+        </iframe>
+    </div>
 
     <script is:inline>
       (function() {
-        const origin = window.location.origin;
-        const pdfUrl = `${origin}/cv.pdf`;
+        const hostname = window.location.hostname;
+        const isLocal = hostname === 'localhost' || 
+                        hostname === '127.0.0.1' || 
+                        hostname.endsWith('.local');
         const frame = document.getElementById('cv-frame');
         if (frame) {
-          frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`;
+          if (isLocal) {
+            // Local dev server: Google Docs cannot reach localhost, use native browser PDF
+            frame.src = '/cv.pdf';
+          } else {
+            // Production: Google Docs viewer for embedded cross-device view
+            const origin = window.location.origin;
+            const pdfUrl = `${origin}/cv.pdf`;
+            frame.src = `https://docs.google.com/gview?url=${encodeURIComponent(pdfUrl)}&embedded=true`;
+          }
         }
       })();
     </script>
