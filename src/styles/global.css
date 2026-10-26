@@ -49,28 +49,165 @@
 
 /* Print optimizations */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
   }
 
-  header, nav, footer, .no-print, button, .theme-toggle {
+  /* Reset document for clean high-contrast print */
+  html, body {
+    display: block !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide web chrome, interactive buttons, theme toggles, and screen-only elements */
+  header, nav, footer, .no-print, button, .theme-toggle, [aria-label="Toggle theme"] {
     display: none !important;
   }
 
-  .print-page {
-    page-break-after: always;
-  }
-
-  .glow-card {
+  /* Unbox outer wrappers and reset web cards */
+  main, .container, .glow-card {
+    display: block !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
     box-shadow: none !important;
-    border: 1px solid #cbd5e1 !important;
-    transform: none !important;
-    page-break-inside: avoid;
+    background: transparent !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
   }
 
+  /* Force light colors even if document has .dark class */
+  .dark {
+    color-scheme: light !important;
+  }
+
+  .dark body,
+  .dark main,
+  .dark .glow-card,
+  .dark [class*="bg-slate-900"],
+  .dark [class*="bg-slate-800"],
+  .dark [class*="bg-slate-950"],
+  .dark [class*="bg-[#090d16]"] {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  .dark [class*="text-white"],
+  .dark [class*="text-slate-100"],
+  .dark [class*="text-slate-200"] {
+    color: #0f172a !important;
+  }
+
+  .dark [class*="text-slate-300"],
+  .dark [class*="text-slate-400"],
+  .dark [class*="text-slate-500"],
+  .dark [class*="text-slate-600"] {
+    color: #334155 !important;
+  }
+
+  .dark [class*="border-slate-800"],
+  .dark [class*="border-slate-700"] {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Compact spacing for A4 pagination */
+  .space-y-12 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem !important;
+  }
+  .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+  }
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.5rem !important;
+  }
+  .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.35rem !important;
+  }
+  .space-y-3 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.25rem !important;
+  }
+  .space-y-2 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.15rem !important;
+  }
+
+  /* Typography scale in print */
+  h2 {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+  h3 {
+    font-size: 13px !important;
+    letter-spacing: 0.05em !important;
+  }
+  h4 {
+    font-size: 14px !important;
+  }
+  h5 {
+    font-size: 12px !important;
+  }
+
+  /* Prevent awkward page break cuts on items */
+  .role-card,
+  .achievement-item,
+  .skill-group,
+  .edu-item,
+  .lang-item {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Contact strip styling for print */
+  .contact-strip {
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    gap: 4px !important;
+  }
+
+  /* Skill tag pills for print */
+  .skill-pill {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
+    font-size: 9.5px !important;
+    padding: 1.5px 5px !important;
+    border-radius: 4px !important;
+  }
+
+  /* Achievement items in print */
+  .achievement-item {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+  }
+
+  /* Education & Languages items in print */
+  .edu-item,
+  .lang-item {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+  }
+
+  /* Links */
   a {
+    color: #3730a3 !important;
     text-decoration: none !important;
-    color: #000000 !important;
   }
 }

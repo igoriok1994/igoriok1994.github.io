@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:pdf": "astro build && node scripts/generate-pdf.mjs",
     "preview": "astro preview",
-    "deploy": "npm run build && npx wrangler pages deploy docs --project-name=igoriok1994-github-io --branch=main"
+    "deploy": "npm run build:pdf && npx wrangler pages deploy docs --project-name=igoriok1994-github-io --branch=main"
   },
   "dependencies": {
     "@astrojs/react": "^4.2.1",
