@@ -137,7 +137,11 @@ async function generatePdf() {
 
   // Emulate print media and wait for fonts/images
   await send('Emulation.setEmulatedMedia', { media: 'print' });
-  await new Promise((r) => setTimeout(r, 1200));
+  await send('Runtime.evaluate', {
+    expression: 'document.fonts.ready.then(() => true)',
+    awaitPromise: true
+  });
+  await new Promise((r) => setTimeout(r, 1000));
 
   // Request printToPDF with zero margins and CSS page size
   console.log('[generate-pdf] Printing via CDP (zero margins, exact A4 full-bleed)...');
