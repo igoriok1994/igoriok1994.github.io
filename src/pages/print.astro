@@ -1,31 +1,22 @@
 ---
 import { cvData } from '../data/cv';
-import '../styles/global.css';
 import { 
   Mail, 
   Phone, 
   MapPin, 
-  Award, 
   Printer, 
   ArrowLeft, 
   Download,
   Briefcase,
   User,
-  FolderGit2,
-  CheckCircle2,
-  Globe
+  FolderGit2
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from '../components/SocialIcons';
 
-const { personal, experience, achievements, skillGroups, education, projects, metrics } = cvData;
+const { personal, experience, achievements, education, projects } = cvData;
 
 const company = experience[0];
 const teamLeadRole = company.roles[0];
 const fullStackRole = company.roles[1];
-
-// Skill groups
-const devopsSkills = skillGroups[3];    // DevOps & Infrastructure
-const leadershipSkills = skillGroups[4];// Engineering Leadership
 ---
 
 <!DOCTYPE html>
@@ -37,21 +28,33 @@ const leadershipSkills = skillGroups[4];// Engineering Leadership
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   
   <style is:inline>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background: #ffffff;
+      color: #1e2530;
+    }
+
     @page {
-      size: A4 portrait;
+      size: 210mm 297mm;
       margin: 0;
     }
 
     @media print {
       html, body {
         background: #ffffff !important;
-        color: #0f172a !important;
-        font-size: 10px !important;
-        line-height: 1.35 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
         margin: 0 !important;
         padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
 
       .no-print {
@@ -62,14 +65,13 @@ const leadershipSkills = skillGroups[4];// Engineering Leadership
         width: 210mm !important;
         height: 297mm !important;
         max-height: 297mm !important;
-        padding: 0 !important;
         margin: 0 !important;
+        padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
         page-break-after: always !important;
         break-after: page !important;
         overflow: hidden !important;
-        box-sizing: border-box !important;
         display: flex !important;
         flex-direction: row !important;
         background: #ffffff !important;
@@ -102,69 +104,175 @@ const leadershipSkills = skillGroups[4];// Engineering Leadership
         background: #ffffff;
         box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
         border-radius: 4px;
-        box-sizing: border-box;
         overflow: hidden;
         display: flex;
         flex-direction: row;
       }
     }
 
-    /* Pill header styling */
-    .pill-header-sidebar {
-      border: 1.8px solid #ffffff;
+    /* Screen Floating Action Bar */
+    .screen-bar {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      max-width: 580px;
+      margin: 12px auto;
+      padding: 10px 16px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(51, 65, 85, 0.8);
+      border-radius: 16px;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+      text-decoration: none;
+    }
+
+    .btn-print {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: #1e293b;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      text-decoration: none;
+    }
+
+    /* Left Sidebar */
+    .sidebar {
+      width: 66mm;
+      flex-shrink: 0;
+      background-color: #191b1f;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-blue-header {
+      background-color: #2464aa;
+      height: 66mm;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .avatar-circle {
+      width: 38mm;
+      height: 38mm;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2.5px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .sidebar-body {
+      padding: 6mm 6mm;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pill-sidebar {
+      border: 2px solid #ffffff;
       border-radius: 9999px;
-      padding: 3.5px 12px;
+      padding: 4px 14px;
       text-align: center;
       color: #ffffff;
       font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 2px;
+      font-size: 12px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .pill-header-main {
-      border: 1.8px solid #1e2530;
+    /* Main Column */
+    .main-col {
+      width: 144mm;
+      flex: 1;
+      background-color: #ffffff;
+      color: #1e2530;
+      padding: 9mm 13mm 8mm 11mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pill-main {
+      border: 2px solid #22262e;
       border-radius: 9999px;
-      padding: 4px 14px;
+      padding: 4px 16px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       color: #1e2530;
       font-weight: 800;
-      font-size: 11.5px;
-      letter-spacing: 1.8px;
+      font-size: 12.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
+      margin-top: 10px;
+    }
+
+    .pill-main.first {
+      margin-top: 0;
     }
   </style>
 </head>
-<body class="font-sans antialiased text-slate-800">
+<body>
 
   {/* Screen Floating Action Bar */}
-  <div class="no-print sticky top-3 z-50 max-w-xl mx-auto px-4 py-2.5 bg-slate-900/95 backdrop-blur-md border border-slate-700/80 rounded-2xl shadow-2xl flex items-center justify-between text-white my-3">
-    <a href="/cv" class="inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white transition-colors">
-      <ArrowLeft className="w-3.5 h-3.5" />
+  <div class="no-print screen-bar">
+    <a href="/cv" class="btn-back">
+      <ArrowLeft size={14} />
       <span>Back to Site</span>
     </a>
 
-    <div class="flex items-center gap-2">
-      <button 
-        type="button" 
-        onclick="window.print()" 
-        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-xs transition-colors cursor-pointer"
-      >
-        <Printer className="w-3.5 h-3.5" />
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button type="button" onclick="window.print()" class="btn-print">
+        <Printer size={14} />
         <span>Print / Save as PDF</span>
       </button>
 
-      <a 
-        href="/cv.pdf" 
-        download="Igor_Vilghelm_CV.pdf"
-        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
-      >
-        <Download className="w-3.5 h-3.5" />
-        <span>Direct PDF</span>
+      <a href="/cv.pdf" download="cv.pdf" class="btn-download">
+        <Download size={14} />
+        <span>Download PDF</span>
       </a>
     </div>
   </div>
@@ -175,166 +283,129 @@ const leadershipSkills = skillGroups[4];// Engineering Leadership
   <div class="page">
     
     {/* Page 1 Left Sidebar */}
-    <aside class="w-[66mm] shrink-0 bg-[#1c1f24] text-white flex flex-col justify-between">
-      <div>
-        {/* Blue Top Block with Avatar */}
-        <div class="bg-[#2764a8] py-6 px-4 flex justify-center items-center">
-          <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-white/50 shadow-lg">
-            <img 
-              src={personal.avatarUrl} 
-              alt={personal.name} 
-              class="w-full h-full object-cover object-center"
-            />
-          </div>
-        </div>
-
-        {/* Sidebar Body */}
-        <div class="p-[5mm_6mm] space-y-4">
-          
-          {/* Section: CONTACT */}
-          <div>
-            <div class="pill-header-sidebar">Contact</div>
-            <div class="space-y-1.5 text-[8.8px] text-slate-200">
-              <div class="flex items-center gap-2">
-                <Phone className="w-3 h-3 text-blue-300 shrink-0" />
-                <a href={`tel:${personal.contacts.phone}`} class="hover:text-white transition-colors">{personal.contacts.phone}</a>
-              </div>
-              <div class="flex items-center gap-2">
-                <Mail className="w-3 h-3 text-blue-300 shrink-0" />
-                <a href={`mailto:${personal.contacts.email}`} class="hover:text-white transition-colors truncate">{personal.contacts.email}</a>
-              </div>
-              <div class="flex items-center gap-2">
-                <MapPin className="w-3 h-3 text-blue-300 shrink-0" />
-                <span>{personal.location}</span>
-              </div>
-              <div class="flex items-center gap-2 pt-1 border-t border-slate-700/80">
-                <GithubIcon className="w-3 h-3 text-blue-300 shrink-0" />
-                <a href={personal.contacts.github} class="hover:text-white transition-colors truncate">github.com/igoriok1994</a>
-              </div>
-              <div class="flex items-center gap-2">
-                <LinkedinIcon className="w-3 h-3 text-blue-300 shrink-0" />
-                <a href={personal.contacts.linkedin} class="hover:text-white transition-colors truncate">linkedin.com/in/igor-vilghem</a>
-              </div>
-              <div class="flex items-center gap-2">
-                <Globe className="w-3 h-3 text-blue-300 shrink-0" />
-                <a href="https://vilghelm.eu" class="hover:text-white transition-colors">vilghelm.eu</a>
-              </div>
-            </div>
-          </div>
-
-          {/* Section: EDUCATION */}
-          <div>
-            <div class="pill-header-sidebar">Education</div>
-            <div class="space-y-2 text-[8.5px]">
-              {education.map((item) => (
-                <div class="space-y-0.5 leading-tight">
-                  <div class="font-bold text-white underline underline-offset-2">{item.institution}</div>
-                  <div class="text-slate-200">{item.degree}</div>
-                  <div class="text-slate-400 text-[8px]">{item.period}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section: LANGUAGE */}
-          <div>
-            <div class="pill-header-sidebar">Language</div>
-            <div class="text-[9px] text-slate-200 text-center font-medium leading-relaxed">
-              Lithuanian / English / Russian
-            </div>
-          </div>
-
+    <aside class="sidebar">
+      {/* Blue Top Block with Avatar */}
+      <div class="sidebar-blue-header">
+        <div class="avatar-circle">
+          <img 
+            src="/cv-avatar.jpg" 
+            alt={personal.name} 
+          />
         </div>
       </div>
 
-      {/* Sidebar Page 1 Footer */}
-      <div class="px-5 py-2.5 text-[8px] text-slate-400 text-center border-t border-slate-800">
-        Page 1 / 3
+      {/* Sidebar Content */}
+      <div class="sidebar-body">
+        
+        {/* CONTACT */}
+        <div>
+          <div class="pill-sidebar">Contact</div>
+          <div style="display: flex; flex-direction: column; gap: 7px; font-size: 9.5px; color: #f1f5f9; padding-left: 2px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <Phone size={13} color="#ffffff" />
+              <a href={`tel:${personal.contacts.phone}`} style="color: #ffffff; text-decoration: none;">{personal.contacts.phone}</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <Mail size={13} color="#ffffff" />
+              <a href={`mailto:${personal.contacts.email}`} style="color: #ffffff; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{personal.contacts.email}</a>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <MapPin size={13} color="#ffffff" />
+              <span>{personal.location}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* EDUCATION */}
+        <div style="margin-top: 4px;">
+          <div class="pill-sidebar">Education</div>
+          <div style="display: flex; flex-direction: column; gap: 9px; font-size: 9px; padding-left: 2px;">
+            {education.map((item) => (
+              <div style="line-height: 1.25;">
+                <div style="font-weight: 700; color: #ffffff; text-decoration: underline; text-underline-offset: 2px;">{item.institution}</div>
+                <div style="color: #cbd5e1; margin-top: 1px;">{item.degree}</div>
+                <div style="color: #94a3b8; font-size: 8px; margin-top: 1px;">{item.period}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* LANGUAGE */}
+        <div style="margin-top: 4px;">
+          <div class="pill-sidebar">Language</div>
+          <div style="font-size: 9.5px; color: #f1f5f9; text-align: center; font-weight: 500;">
+            Lithuanian / English / Russian
+          </div>
+        </div>
+
       </div>
     </aside>
 
     {/* Page 1 Right Main Content */}
-    <main class="flex-1 bg-white text-slate-800 p-[8mm_10mm_6mm_9mm] flex flex-col justify-between">
-      <div>
-        
-        {/* Name & Title Header */}
-        <div class="mb-3">
-          <h1 class="text-[34px] font-black text-[#1c2530] tracking-tight leading-none">
-            {personal.name}
-          </h1>
-          <p class="text-[14px] font-medium text-slate-600 mt-1">
-            Full stack developer
-          </p>
-        </div>
-
-        {/* Section: ABOUT ME */}
-        <section class="mb-3">
-          <div class="pill-header-main">
-            <User className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
-            <span>About Me</span>
-          </div>
-          <div class="text-[8.8px] text-slate-700 space-y-1.5 leading-[1.38]">
-            <p>{personal.about.summary}</p>
-            <p>{personal.about.details[0]}</p>
-            <p>{personal.about.details[1]}</p>
-          </div>
-        </section>
-
-        {/* Section: EXPERIENCE */}
-        <section class="space-y-2">
-          <div class="pill-header-main">
-            <Briefcase className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
-            <span>Experience</span>
-          </div>
-
-          {/* Role Header */}
-          <div class="flex items-baseline justify-between font-bold text-[10px] text-slate-900 border-b border-slate-100 pb-0.5">
-            <span>Full stack developer / Team lead</span>
-            <span class="text-slate-500 font-medium text-[9px]">{company.period}</span>
-          </div>
-          <div class="font-bold text-[9.5px] text-slate-900 -mt-1">
-            {company.company}
-          </div>
-
-          {/* Sub-position 1: Team Lead */}
-          <div class="space-y-1">
-            <div class="font-bold text-[8.8px] text-slate-900">
-              {teamLeadRole.role} ({teamLeadRole.period})
-            </div>
-            <ul class="text-[8.2px] text-slate-700 space-y-0.5 leading-[1.28]">
-              {teamLeadRole.responsibilities.map((resp) => (
-                <li class="flex items-start gap-1.5">
-                  <span class="text-slate-800 font-bold shrink-0 leading-tight">•</span>
-                  <span>{resp}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Sub-position 2: Full Stack Developer */}
-          <div class="space-y-1 pt-1">
-            <div class="font-bold text-[8.8px] text-slate-900">
-              {fullStackRole.role} ({fullStackRole.period})
-            </div>
-            <ul class="text-[8.2px] text-slate-700 space-y-0.5 leading-[1.28]">
-              {fullStackRole.responsibilities.map((resp) => (
-                <li class="flex items-start gap-1.5">
-                  <span class="text-slate-800 font-bold shrink-0 leading-tight">•</span>
-                  <span>{resp}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-        </section>
-
+    <main class="main-col">
+      {/* Name & Title Header */}
+      <div style="margin-bottom: 12px;">
+        <h1 style="font-size: 38px; font-weight: 800; color: #1e2530; letter-spacing: -0.5px; line-height: 1; text-transform: none;">
+          {personal.name}
+        </h1>
+        <p style="font-size: 16px; font-weight: 500; color: #4b5563; margin-top: 4px;">
+          Full stack developer
+        </p>
       </div>
 
-      {/* Footer Page 1 */}
-      <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8px] text-slate-400">
-        <span>{personal.name} • Curriculum Vitae</span>
-        <span>Vilnius, Lithuania • 2026</span>
-      </footer>
+      {/* ABOUT ME */}
+      <section style="margin-bottom: 10px;">
+        <div class="pill-main first">
+          <User size={15} color="#2464aa" />
+          <span>About Me</span>
+        </div>
+        <div style="font-size: 9.8px; color: #334155; line-height: 1.42; display: flex; flex-direction: column; gap: 6px;">
+          <p>{personal.about.summary}</p>
+          <p>{personal.about.details[0]}</p>
+          <p>{personal.about.details[1]}</p>
+        </div>
+      </section>
+
+      {/* EXPERIENCE */}
+      <section>
+        <div class="pill-main">
+          <Briefcase size={15} color="#2464aa" />
+          <span>Experience</span>
+        </div>
+
+        {/* Company Title & Period */}
+        <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; font-weight: 700; color: #0f172a; margin-top: 2px;">
+          <span>Full stack developer / Team lead</span>
+          <span style="font-size: 9.5px; font-weight: 500; color: #475569;">2016-Present</span>
+        </div>
+        <div style="font-size: 10.5px; font-weight: 700; color: #0f172a; margin-bottom: 5px;">
+          {company.company}
+        </div>
+
+        {/* Team Lead Sub-role */}
+        <div style="margin-bottom: 6px;">
+          <div style="font-size: 9.5px; font-weight: 700; color: #1e2530; margin-bottom: 2px;">
+            {teamLeadRole.role} ({teamLeadRole.period})
+          </div>
+          <ul style="list-style: disc; padding-left: 14px; font-size: 8.8px; color: #334155; line-height: 1.32; display: flex; flex-direction: column; gap: 1.5px;">
+            {teamLeadRole.responsibilities.map((resp) => (
+              <li>{resp}</li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Full Stack Developer Sub-role */}
+        <div>
+          <div style="font-size: 9.5px; font-weight: 700; color: #1e2530; margin-bottom: 2px;">
+            {fullStackRole.role} ({fullStackRole.period})
+          </div>
+          <ul style="list-style: disc; padding-left: 14px; font-size: 8.8px; color: #334155; line-height: 1.32; display: flex; flex-direction: column; gap: 1.5px;">
+            {fullStackRole.responsibilities.map((resp) => (
+              <li>{resp}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
     </main>
 
   </div>
@@ -346,143 +417,109 @@ const leadershipSkills = skillGroups[4];// Engineering Leadership
   <div class="page">
     
     {/* Page 2 Left Sidebar */}
-    <aside class="w-[66mm] shrink-0 bg-[#1c1f24] text-white flex flex-col justify-between">
-      <div>
-        {/* Blue accent top bar */}
-        <div class="bg-[#2764a8] h-3 w-full"></div>
-
-        <div class="p-[5mm_6mm] space-y-4">
-          
-          {/* Section: SKILLS */}
-          <div>
-            <div class="pill-header-sidebar">Skills</div>
-            
-            <div class="space-y-2.5 text-[8.4px]">
-              
-              {/* Software Development Categories */}
-              <div>
-                <div class="font-bold text-white mb-1 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                  <span>Core & Frontend</span>
-                </div>
-                <div class="text-slate-300 pl-3 space-y-0.5 leading-snug">
-                  <div>• JavaScript (ES6+), TypeScript</div>
-                  <div>• React, React Native (Expo), Redux</div>
-                  <div>• SVG-based SCADA Visualizations</div>
-                  <div>• Web Security Hardening (CSP, CORS)</div>
-                  <div>• HTML5 / CSS3 / Tailwind</div>
-                </div>
-              </div>
-
-              <div>
-                <div class="font-bold text-white mb-1 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                  <span>Backend & Architecture</span>
-                </div>
-                <div class="text-slate-300 pl-3 space-y-0.5 leading-snug">
-                  <div>• Node.js (Fastify), PHP (Phalcon 5)</div>
-                  <div>• REST API Architecture & Microservices</div>
-                  <div>• Redis / Garnet (In-Memory Stores)</div>
-                  <div>• High-Load Systems & Real-Time Data</div>
-                  <div>• LLM & AI Integration (Ollama, LM Studio)</div>
-                </div>
-              </div>
-
-              <div>
-                <div class="font-bold text-white mb-1 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                  <span>Databases & Processing</span>
-                </div>
-                <div class="text-slate-300 pl-3 space-y-0.5 leading-snug">
-                  <div>• Oracle, MariaDB, PostgreSQL</div>
-                  <div>• Complex Query Optimization & Tuning</div>
-                  <div>• Stored Procedures & Functions</div>
-                  <div>• Time-Series Data Modeling</div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Section: SCALE & METRICS */}
-          <div>
-            <div class="pill-header-sidebar">Scale & Impact</div>
-            <div class="space-y-1.5 text-[8.2px] text-slate-300">
-              {metrics.map((m) => (
-                <div class="bg-slate-800/80 p-1.5 rounded border border-slate-700/60">
-                  <div class="font-bold text-blue-300">{m.value} — {m.label}</div>
-                  <div class="text-slate-400 text-[7.5px] leading-tight mt-0.5">{m.description}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
+    <aside class="sidebar">
+      <div class="sidebar-body" style="padding-top: 10mm;">
+        
+        {/* SKILLS */}
+        <div>
+          <div class="pill-sidebar">Skills</div>
+          <ul style="list-style: none; padding-left: 0; font-size: 9.2px; color: #f1f5f9; display: flex; flex-direction: column; gap: 4px;">
+            <li>• Software development
+              <ul style="list-style: circle; padding-left: 16px; margin-top: 2px; color: #cbd5e1; display: flex; flex-direction: column; gap: 2px; font-size: 8.6px;">
+                <li>Front-end development</li>
+                <li>Back-end development</li>
+              </ul>
+            </li>
+            <li>• Automation (CI / CD)</li>
+            <li>• Cloud computing
+              <ul style="list-style: circle; padding-left: 16px; margin-top: 2px; color: #cbd5e1; display: flex; flex-direction: column; gap: 2px; font-size: 8.6px;">
+                <li>Cloud management</li>
+              </ul>
+            </li>
+            <li>• Management</li>
+            <li>• Design</li>
+          </ul>
         </div>
-      </div>
 
-      {/* Sidebar Page 2 Footer */}
-      <div class="px-5 py-2.5 text-[8px] text-slate-400 text-center border-t border-slate-800">
-        Page 2 / 3
+        {/* STACK */}
+        <div style="margin-top: 8px;">
+          <div class="pill-sidebar">Stack</div>
+          <div style="font-size: 9px; color: #f1f5f9; display: flex; flex-direction: column; gap: 7px;">
+            
+            <div>
+              <div style="font-weight: 700; color: #ffffff; margin-bottom: 1px;">Core stack</div>
+              <ul style="list-style: disc; padding-left: 14px; color: #cbd5e1; font-size: 8.5px; line-height: 1.3;">
+                <li>JavaScript / TypeScript</li>
+                <li>React / React Native / Redux</li>
+                <li>Node.js</li>
+                <li>PHP (modern + legacy)</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 700; color: #ffffff; margin-bottom: 1px;">Backend</div>
+              <ul style="list-style: disc; padding-left: 14px; color: #cbd5e1; font-size: 8.5px; line-height: 1.3;">
+                <li>Phalcon 5 (PHP framework)</li>
+                <li>REST APIs</li>
+                <li>High-load systems</li>
+                <li>Data processing</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 700; color: #ffffff; margin-bottom: 1px;">Databases</div>
+              <ul style="list-style: disc; padding-left: 14px; color: #cbd5e1; font-size: 8.5px; line-height: 1.3;">
+                <li>Oracle / MariaDB / PostrgeSQL</li>
+                <li>Query optimization</li>
+                <li>Stored procedures</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 700; color: #ffffff; margin-bottom: 1px;">DevOps</div>
+              <ul style="list-style: disc; padding-left: 14px; color: #cbd5e1; font-size: 8.5px; line-height: 1.3;">
+                <li>Jenkins CI/CD</li>
+                <li>IIS / Nginx / Apache</li>
+              </ul>
+            </div>
+
+            <div>
+              <div style="font-weight: 700; color: #ffffff; margin-bottom: 1px;">Additional</div>
+              <ul style="list-style: disc; padding-left: 14px; color: #cbd5e1; font-size: 8.5px; line-height: 1.3;">
+                <li>Python 3</li>
+                <li>Git</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </aside>
 
     {/* Page 2 Right Main Content */}
-    <main class="flex-1 bg-white text-slate-800 p-[8mm_10mm_6mm_9mm] flex flex-col justify-between">
-      <div>
-        
-        {/* Section: PROJECTS */}
-        <section class="space-y-3">
-          <div class="pill-header-main">
-            <FolderGit2 className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
-            <span>Projects</span>
-          </div>
+    <main class="main-col">
+      <section>
+        <div class="pill-main first">
+          <FolderGit2 size={15} color="#2464aa" />
+          <span>Projects</span>
+        </div>
 
-          {/* Project Items */}
-          <div class="space-y-2.5">
-            {projects.map((proj) => (
-              <div class="space-y-1 border-b border-slate-100 pb-2 last:border-b-0 last:pb-0">
-                <div class="flex items-baseline justify-between">
-                  <h3 class="font-bold text-[9.5px] text-slate-900 leading-tight">
-                    {proj.title}
-                  </h3>
-                  <span class="text-[8.2px] font-semibold text-slate-500 shrink-0 ml-2">
-                    {proj.period}
-                  </span>
-                </div>
-
-                <div class="flex flex-wrap gap-1 my-0.5">
-                  {proj.tags.slice(0, 6).map((t) => (
-                    <span class="text-[7.5px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200 font-medium">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <p class="text-[8.2px] text-slate-600 leading-snug">
-                  {proj.description}
-                </p>
-
-                <ul class="text-[8px] text-slate-700 space-y-0.5 pl-2 leading-[1.26]">
-                  {proj.bullets.map((b) => (
-                    <li class="flex items-start gap-1">
-                      <span class="text-blue-600 font-bold shrink-0">•</span>
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
+        <div style="display: flex; flex-direction: column; gap: 7px; margin-top: 4px;">
+          {projects.map((proj) => (
+            <div>
+              <div style="font-size: 9.5px; font-weight: 700; color: #0f172a; margin-bottom: 2px;">
+                {proj.title} ({proj.period})
               </div>
-            ))}
-          </div>
-
-        </section>
-
-      </div>
-
-      {/* Footer Page 2 */}
-      <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8px] text-slate-400">
-        <span>{personal.name} • Curriculum Vitae</span>
-        <span>Projects & Portfolio</span>
-      </footer>
+              <ul style="list-style: disc; padding-left: 14px; font-size: 8.6px; color: #334155; line-height: 1.32; display: flex; flex-direction: column; gap: 1.5px;">
+                {proj.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
 
   </div>
@@ -494,109 +531,24 @@ const leadershipSkills = skillGroups[4];// Engineering Leadership
   <div class="page">
     
     {/* Page 3 Left Sidebar */}
-    <aside class="w-[66mm] shrink-0 bg-[#1c1f24] text-white flex flex-col justify-between">
-      <div>
-        {/* Blue accent top bar */}
-        <div class="bg-[#2764a8] h-3 w-full"></div>
-
-        <div class="p-[5mm_6mm] space-y-4">
-          
-          {/* Section: DEVOPS & INFRASTRUCTURE */}
-          <div>
-            <div class="pill-header-sidebar">DevOps & Cloud</div>
-            <div class="text-slate-300 text-[8.5px] space-y-1.5 pl-1 leading-snug">
-              {devopsSkills.skills.map((s) => (
-                <div class="flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
-                  <span>{s}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section: LEADERSHIP & PROCESS */}
-          <div>
-            <div class="pill-header-sidebar">Leadership</div>
-            <div class="text-slate-300 text-[8.5px] space-y-1.5 pl-1 leading-snug">
-              {leadershipSkills.skills.map((s) => (
-                <div class="flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
-                  <span>{s}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Section: SECURITY & AUDIT */}
-          <div>
-            <div class="pill-header-sidebar">Security & Audit</div>
-            <div class="space-y-1.5 text-[8.3px] text-slate-300">
-              <div class="bg-slate-800/80 p-2 rounded border border-slate-700/60 space-y-1">
-                <div class="font-bold text-blue-300">OWASP ZAP Remediation</div>
-                <div class="text-slate-400 text-[7.5px] leading-tight">Remediated critical backend vulnerabilities post cybersecurity audit.</div>
-              </div>
-              <div class="bg-slate-800/80 p-2 rounded border border-slate-700/60 space-y-1">
-                <div class="font-bold text-blue-300">CSP & Hardening</div>
-                <div class="text-slate-400 text-[7.5px] leading-tight">Strict Content Security Policy & IIS production security headers.</div>
-              </div>
-              <div class="bg-slate-800/80 p-2 rounded border border-slate-700/60 space-y-1">
-                <div class="font-bold text-blue-300">Rate Limiting & Token Revocation</div>
-                <div class="text-slate-400 text-[7.5px] leading-tight">Redis / Garnet distributed brute-force protection and session revocation.</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Section: VERIFIED LINKS */}
-          <div>
-            <div class="pill-header-sidebar">Verified Links</div>
-            <div class="space-y-1.5 text-[8.5px] text-slate-300">
-              <div>• Portfolio: <a href="https://vilghelm.eu" class="text-blue-300 hover:underline">vilghelm.eu</a></div>
-              <div>• GitHub: <a href={personal.contacts.github} class="text-blue-300 hover:underline">github.com/igoriok1994</a></div>
-              <div>• LinkedIn: <a href={personal.contacts.linkedin} class="text-blue-300 hover:underline">linkedin.com/in/igor-vilghem</a></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Sidebar Page 3 Footer */}
-      <div class="px-5 py-2.5 text-[8px] text-slate-400 text-center border-t border-slate-800">
-        Page 3 / 3
-      </div>
+    <aside class="sidebar">
+      {/* Empty clean dark sidebar matching the original 3rd page */}
+      <div class="sidebar-body" style="padding-top: 10mm;"></div>
     </aside>
 
     {/* Page 3 Right Main Content */}
-    <main class="flex-1 bg-white text-slate-800 p-[8mm_10mm_6mm_9mm] flex flex-col justify-between">
-      <div>
-        
-        {/* Section: KEY ACHIEVEMENTS */}
-        <section class="space-y-2">
-          <div class="pill-header-main">
-            <Award className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
-            <span>Key Technical Achievements</span>
-          </div>
+    <main class="main-col">
+      <section>
+        <div class="pill-main first">
+          <span>Key Achievements</span>
+        </div>
 
-          <div class="space-y-1.5 text-[8.6px] text-slate-700">
-            {achievements.map((item) => (
-              <div class="flex items-start gap-2 p-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 leading-snug">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                <span>
-                  <strong class="text-slate-900 font-semibold">{item.split(' ')[0]} {item.split(' ')[1]}</strong>{' '}
-                  {item.split(' ').slice(2).join(' ')}
-                </span>
-              </div>
-            ))}
-          </div>
-
-        </section>
-
-      </div>
-
-      {/* Footer Page 3 */}
-      <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8px] text-slate-400">
-        <span>{personal.name} • Curriculum Vitae</span>
-        <span>Key Achievements & Summary</span>
-      </footer>
+        <ul style="list-style: disc; padding-left: 14px; font-size: 9.2px; color: #334155; line-height: 1.38; display: flex; flex-direction: column; gap: 5.5px; margin-top: 6px;">
+          {achievements.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
     </main>
 
   </div>
