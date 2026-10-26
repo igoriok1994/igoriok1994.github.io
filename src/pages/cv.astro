@@ -251,4 +251,27 @@ const { personal, experience, achievements, skillGroups, education, languages } 
     </div>
 
   </div>
+
+  {/* Auto-trigger print when navigated with ?print=true */}
+  <script is:inline>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('print') === 'true') {
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, '', cleanUrl);
+
+        const triggerPrint = () => {
+          setTimeout(() => {
+            window.print();
+          }, 350);
+        };
+
+        if (document.readyState === 'complete') {
+          triggerPrint();
+        } else {
+          window.addEventListener('load', triggerPrint);
+        }
+      }
+    })();
+  </script>
 </Layout>
