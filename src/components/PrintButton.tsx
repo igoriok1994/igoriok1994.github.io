@@ -8,13 +8,13 @@ interface PrintButtonProps {
 export default function PrintButton({ label = "Print CV", className = "" }: PrintButtonProps) {
   const handlePrint = () => {
     if (typeof window !== 'undefined') {
-      const isCvPage = window.location.pathname.replace(/\/$/, '') === '/cv';
-      if (isCvPage) {
+      const isPrintPage = window.location.pathname.replace(/\/$/, '') === '/print';
+      if (isPrintPage) {
         window.print();
       } else {
-        const newWindow = window.open('/cv?print=true', '_blank');
+        const newWindow = window.open('/print?auto=true', '_blank');
         if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-          window.location.href = '/cv?print=true';
+          window.location.href = '/print?auto=true';
         }
       }
     }

@@ -83,7 +83,7 @@ async function generatePdf() {
   await new Promise((resolve) => server.listen(port, '127.0.0.1', resolve));
   console.log(`[generate-pdf] Internal server listening on http://127.0.0.1:${port}`);
 
-  console.log('[generate-pdf] Rendering /cv into PDF via Headless Chrome...');
+  console.log('[generate-pdf] Rendering /print into PDF via Headless Chrome...');
   const child = spawn(
     browserPath,
     [
@@ -92,7 +92,7 @@ async function generatePdf() {
       '--no-pdf-header-footer',
       '--run-all-compositor-stages-before-draw',
       '--virtual-time-budget=2000',
-      `http://127.0.0.1:${port}/cv`
+      `http://127.0.0.1:${port}/print`
     ],
     { stdio: 'ignore' }
   );
