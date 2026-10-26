@@ -6,33 +6,26 @@ import {
   Phone, 
   MapPin, 
   Award, 
-  GraduationCap, 
-  Languages, 
-  CheckCircle2, 
   Printer, 
   ArrowLeft, 
   Download,
-  Building,
-  Layers,
-  Globe,
-  Database,
-  Smartphone
+  Briefcase,
+  User,
+  FolderGit2,
+  CheckCircle2,
+  Globe
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/SocialIcons';
 
-const { personal, experience, achievements, skillGroups, education, languages } = cvData;
+const { personal, experience, achievements, skillGroups, education, projects, metrics } = cvData;
 
 const company = experience[0];
 const teamLeadRole = company.roles[0];
 const fullStackRole = company.roles[1];
 
-// Split full stack role responsibilities across pages for perfect visual balance
-const role2Part1 = fullStackRole.responsibilities.slice(0, 5);
-const role2Part2 = fullStackRole.responsibilities.slice(5);
-
-// Filter skill groups for page 1 & page 2 left columns
-const page1SkillGroups = skillGroups.slice(0, 3);
-const page2SkillGroups = skillGroups.slice(3);
+// Skill groups
+const devopsSkills = skillGroups[3];    // DevOps & Infrastructure
+const leadershipSkills = skillGroups[4];// Engineering Leadership
 ---
 
 <!DOCTYPE html>
@@ -40,7 +33,7 @@ const page2SkillGroups = skillGroups.slice(3);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{personal.name} – Curriculum Vitae (Print & PDF)</title>
+  <title>{personal.name} – Curriculum Vitae</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   
   <style is:inline>
@@ -69,13 +62,16 @@ const page2SkillGroups = skillGroups.slice(3);
         width: 210mm !important;
         height: 297mm !important;
         max-height: 297mm !important;
-        padding: 10mm 12mm !important;
+        padding: 0 !important;
+        margin: 0 !important;
         box-shadow: none !important;
         border: none !important;
         page-break-after: always !important;
         break-after: page !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: row !important;
         background: #ffffff !important;
       }
 
@@ -92,7 +88,7 @@ const page2SkillGroups = skillGroups.slice(3);
 
     @media screen {
       body {
-        background-color: #0f172a;
+        background-color: #0c1017;
         color: #1e293b;
         min-height: 100vh;
         padding-bottom: 40px;
@@ -100,14 +96,46 @@ const page2SkillGroups = skillGroups.slice(3);
 
       .page {
         width: 210mm;
-        min-height: 297mm;
-        margin: 20px auto;
-        padding: 10mm 12mm;
+        height: 297mm;
+        max-height: 297mm;
+        margin: 24px auto;
         background: #ffffff;
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
         border-radius: 4px;
         box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
       }
+    }
+
+    /* Pill header styling */
+    .pill-header-sidebar {
+      border: 1.8px solid #ffffff;
+      border-radius: 9999px;
+      padding: 3.5px 12px;
+      text-align: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .pill-header-main {
+      border: 1.8px solid #1e2530;
+      border-radius: 9999px;
+      padding: 4px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #1e2530;
+      font-weight: 800;
+      font-size: 11.5px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 9px;
     }
   </style>
 </head>
@@ -124,7 +152,7 @@ const page2SkillGroups = skillGroups.slice(3);
       <button 
         type="button" 
         onclick="window.print()" 
-        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition-colors cursor-pointer"
+        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-500 text-white shadow-xs transition-colors cursor-pointer"
       >
         <Printer className="w-3.5 h-3.5" />
         <span>Print / Save as PDF</span>
@@ -141,324 +169,436 @@ const page2SkillGroups = skillGroups.slice(3);
     </div>
   </div>
 
-  {/* ==================== PAGE 1 ==================== */}
-  <div class="page flex flex-col justify-between">
-    <div>
-      {/* Header */}
-      <header class="border-b-2 border-indigo-600 pb-3 mb-3.5">
-        <div class="flex flex-row justify-between items-start gap-4">
+  {/* ================================================================ */}
+  {/* ========================== PAGE 1 ============================== */}
+  {/* ================================================================ */}
+  <div class="page">
+    
+    {/* Page 1 Left Sidebar */}
+    <aside class="w-[66mm] shrink-0 bg-[#1c1f24] text-white flex flex-col justify-between">
+      <div>
+        {/* Blue Top Block with Avatar */}
+        <div class="bg-[#2764a8] py-6 px-4 flex justify-center items-center">
+          <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-white/50 shadow-lg">
+            <img 
+              src={personal.avatarUrl} 
+              alt={personal.name} 
+              class="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+
+        {/* Sidebar Body */}
+        <div class="p-[5mm_6mm] space-y-4">
+          
+          {/* Section: CONTACT */}
           <div>
-            <h1 class="text-2xl font-black tracking-tight text-slate-950 uppercase">
-              {personal.name}
-            </h1>
-            <p class="text-xs font-bold text-indigo-700 mt-0.5 tracking-wide">
-              {personal.title}
-            </p>
-            <p class="text-[10px] text-slate-600 mt-1.5 max-w-lg leading-relaxed">
-              {personal.about.summary}
-            </p>
+            <div class="pill-header-sidebar">Contact</div>
+            <div class="space-y-1.5 text-[8.8px] text-slate-200">
+              <div class="flex items-center gap-2">
+                <Phone className="w-3 h-3 text-blue-300 shrink-0" />
+                <a href={`tel:${personal.contacts.phone}`} class="hover:text-white transition-colors">{personal.contacts.phone}</a>
+              </div>
+              <div class="flex items-center gap-2">
+                <Mail className="w-3 h-3 text-blue-300 shrink-0" />
+                <a href={`mailto:${personal.contacts.email}`} class="hover:text-white transition-colors truncate">{personal.contacts.email}</a>
+              </div>
+              <div class="flex items-center gap-2">
+                <MapPin className="w-3 h-3 text-blue-300 shrink-0" />
+                <span>{personal.location}</span>
+              </div>
+              <div class="flex items-center gap-2 pt-1 border-t border-slate-700/80">
+                <GithubIcon className="w-3 h-3 text-blue-300 shrink-0" />
+                <a href={personal.contacts.github} class="hover:text-white transition-colors truncate">github.com/igoriok1994</a>
+              </div>
+              <div class="flex items-center gap-2">
+                <LinkedinIcon className="w-3 h-3 text-blue-300 shrink-0" />
+                <a href={personal.contacts.linkedin} class="hover:text-white transition-colors truncate">linkedin.com/in/igor-vilghem</a>
+              </div>
+              <div class="flex items-center gap-2">
+                <Globe className="w-3 h-3 text-blue-300 shrink-0" />
+                <a href="https://vilghelm.eu" class="hover:text-white transition-colors">vilghelm.eu</a>
+              </div>
+            </div>
           </div>
 
-          {/* Contact Details */}
-          <div class="text-[9.5px] space-y-1 text-slate-700 shrink-0 text-right bg-slate-50 p-2.5 rounded-lg border border-slate-200 min-w-[210px]">
-            <div class="flex items-center justify-end gap-1.5">
-              <a href={`mailto:${personal.contacts.email}`} class="font-semibold text-slate-900 hover:underline">{personal.contacts.email}</a>
-              <Mail className="w-3 h-3 text-indigo-600 shrink-0" />
-            </div>
-            <div class="flex items-center justify-end gap-1.5">
-              <a href={`tel:${personal.contacts.phone}`} class="font-medium text-slate-800">{personal.contacts.phone}</a>
-              <Phone className="w-3 h-3 text-indigo-600 shrink-0" />
-            </div>
-            <div class="flex items-center justify-end gap-1.5">
-              <span class="text-slate-600">{personal.location}</span>
-              <MapPin className="w-3 h-3 text-indigo-600 shrink-0" />
-            </div>
-            <div class="flex items-center justify-end gap-1.5 pt-1 border-t border-slate-200">
-              <a href={personal.contacts.github} class="text-indigo-700 font-medium hover:underline">github.com/igoriok1994</a>
-              <GithubIcon className="w-3 h-3 text-slate-700 shrink-0" />
-            </div>
-            <div class="flex items-center justify-end gap-1.5">
-              <a href={personal.contacts.linkedin} class="text-indigo-700 font-medium hover:underline">linkedin.com/in/igor-vilghem</a>
-              <LinkedinIcon className="w-3 h-3 text-slate-700 shrink-0" />
+          {/* Section: EDUCATION */}
+          <div>
+            <div class="pill-header-sidebar">Education</div>
+            <div class="space-y-2 text-[8.5px]">
+              {education.map((item) => (
+                <div class="space-y-0.5 leading-tight">
+                  <div class="font-bold text-white underline underline-offset-2">{item.institution}</div>
+                  <div class="text-slate-200">{item.degree}</div>
+                  <div class="text-slate-400 text-[8px]">{item.period}</div>
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* Section: LANGUAGE */}
+          <div>
+            <div class="pill-header-sidebar">Language</div>
+            <div class="text-[9px] text-slate-200 text-center font-medium leading-relaxed">
+              Lithuanian / English / Russian
+            </div>
+          </div>
+
         </div>
-      </header>
+      </div>
 
-      {/* Main Page 1 Grid */}
-      <div class="grid grid-cols-12 gap-4 items-start">
+      {/* Sidebar Page 1 Footer */}
+      <div class="px-5 py-2.5 text-[8px] text-slate-400 text-center border-t border-slate-800">
+        Page 1 / 3
+      </div>
+    </aside>
+
+    {/* Page 1 Right Main Content */}
+    <main class="flex-1 bg-white text-slate-800 p-[8mm_10mm_6mm_9mm] flex flex-col justify-between">
+      <div>
         
-        {/* Left Column (35%) */}
-        <aside class="col-span-4 space-y-3.5">
-          <section class="space-y-2.5">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <Layers className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Core Competencies
-              </h2>
-            </div>
-
-            <div class="space-y-2">
-              {page1SkillGroups.map((group) => (
-                <div class="space-y-1">
-                  <h3 class="text-[9.5px] font-bold uppercase tracking-wider text-indigo-800">
-                    {group.name}
-                  </h3>
-                  <div class="flex flex-wrap gap-1">
-                    {group.skills.map((skill) => (
-                      <span class="text-[8.5px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200 font-medium leading-none">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Languages */}
-          <section class="space-y-1.5 pt-2 border-t border-slate-200">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <Languages className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Languages
-              </h2>
-            </div>
-
-            <div class="space-y-1 text-[9.5px]">
-              {languages.map((lang) => (
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-slate-800">{lang.language}</span>
-                  <span class="text-slate-600 text-[8.5px] px-1.5 py-0.5 bg-slate-100 rounded border border-slate-200">{lang.proficiency}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Scale Highlights Banner */}
-          <div class="p-2.5 rounded-lg bg-indigo-50/70 border border-indigo-100 text-[9px] text-slate-700 space-y-1.5">
-            <div class="font-bold text-indigo-900 uppercase tracking-wider text-[9.5px]">Engineering Scale</div>
-            <div>• <strong class="text-slate-900">1M+</strong> connected smart metering devices</div>
-            <div>• <strong class="text-slate-900">Per-second</strong> time-series aggregation resolution</div>
-            <div>• Multi-region deployments across <strong class="text-slate-900">LT, LV & Central Asia</strong></div>
-          </div>
-        </aside>
-
-        {/* Right Column (65%) */}
-        <div class="col-span-8 space-y-3.5 border-l border-slate-200 pl-4">
-          <section class="space-y-3">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <Building className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Commercial Experience
-              </h2>
-            </div>
-
-            {/* Company Info */}
-            <div class="space-y-3">
-              <div class="flex items-baseline justify-between border-b border-slate-100 pb-1">
-                <div>
-                  <span class="text-sm font-black text-slate-950">{company.company}</span>
-                  <span class="text-[10px] text-slate-500 ml-1.5">({company.location})</span>
-                </div>
-                <span class="text-[10px] font-bold text-indigo-700">{company.period}</span>
-              </div>
-
-              {/* Role 1: Team Lead & Full Stack Developer */}
-              <div class="space-y-1">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                    <span>{teamLeadRole.role}</span>
-                  </h3>
-                  <span class="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">
-                    {teamLeadRole.period}
-                  </span>
-                </div>
-
-                <ul class="space-y-1 pl-2 text-[9.5px] text-slate-700 leading-snug">
-                  {teamLeadRole.responsibilities.map((resp) => (
-                    <li class="flex items-start gap-1.5">
-                      <span class="text-indigo-600 font-bold shrink-0 mt-0.5">•</span>
-                      <span>{resp}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Role 2: Full Stack Developer (Part 1) */}
-              <div class="space-y-1 pt-1">
-                <div class="flex items-center justify-between">
-                  <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                    <span>{fullStackRole.role}</span>
-                  </h3>
-                  <span class="text-[9px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
-                    {fullStackRole.period}
-                  </span>
-                </div>
-
-                <ul class="space-y-1 pl-2 text-[9.5px] text-slate-700 leading-snug">
-                  {role2Part1.map((resp) => (
-                    <li class="flex items-start gap-1.5">
-                      <span class="text-indigo-600 font-bold shrink-0 mt-0.5">•</span>
-                      <span>{resp}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
+        {/* Name & Title Header */}
+        <div class="mb-3">
+          <h1 class="text-[34px] font-black text-[#1c2530] tracking-tight leading-none">
+            {personal.name}
+          </h1>
+          <p class="text-[14px] font-medium text-slate-600 mt-1">
+            Full stack developer
+          </p>
         </div>
+
+        {/* Section: ABOUT ME */}
+        <section class="mb-3">
+          <div class="pill-header-main">
+            <User className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
+            <span>About Me</span>
+          </div>
+          <div class="text-[8.8px] text-slate-700 space-y-1.5 leading-[1.38]">
+            <p>{personal.about.summary}</p>
+            <p>{personal.about.details[0]}</p>
+            <p>{personal.about.details[1]}</p>
+          </div>
+        </section>
+
+        {/* Section: EXPERIENCE */}
+        <section class="space-y-2">
+          <div class="pill-header-main">
+            <Briefcase className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
+            <span>Experience</span>
+          </div>
+
+          {/* Role Header */}
+          <div class="flex items-baseline justify-between font-bold text-[10px] text-slate-900 border-b border-slate-100 pb-0.5">
+            <span>Full stack developer / Team lead</span>
+            <span class="text-slate-500 font-medium text-[9px]">{company.period}</span>
+          </div>
+          <div class="font-bold text-[9.5px] text-slate-900 -mt-1">
+            {company.company}
+          </div>
+
+          {/* Sub-position 1: Team Lead */}
+          <div class="space-y-1">
+            <div class="font-bold text-[8.8px] text-slate-900">
+              {teamLeadRole.role} ({teamLeadRole.period})
+            </div>
+            <ul class="text-[8.2px] text-slate-700 space-y-0.5 leading-[1.28]">
+              {teamLeadRole.responsibilities.map((resp) => (
+                <li class="flex items-start gap-1.5">
+                  <span class="text-slate-800 font-bold shrink-0 leading-tight">•</span>
+                  <span>{resp}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Sub-position 2: Full Stack Developer */}
+          <div class="space-y-1 pt-1">
+            <div class="font-bold text-[8.8px] text-slate-900">
+              {fullStackRole.role} ({fullStackRole.period})
+            </div>
+            <ul class="text-[8.2px] text-slate-700 space-y-0.5 leading-[1.28]">
+              {fullStackRole.responsibilities.map((resp) => (
+                <li class="flex items-start gap-1.5">
+                  <span class="text-slate-800 font-bold shrink-0 leading-tight">•</span>
+                  <span>{resp}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </section>
 
       </div>
-    </div>
 
-    {/* Footer Page 1 */}
-    <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8.5px] text-slate-500">
-      <span>Igor Vilghelm • Curriculum Vitae</span>
-      <span>Page 1 of 2</span>
-    </footer>
+      {/* Footer Page 1 */}
+      <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8px] text-slate-400">
+        <span>{personal.name} • Curriculum Vitae</span>
+        <span>Vilnius, Lithuania • 2026</span>
+      </footer>
+    </main>
+
   </div>
 
 
-  {/* ==================== PAGE 2 ==================== */}
-  <div class="page flex flex-col justify-between">
-    <div>
-      {/* Page 2 Mini Header */}
-      <header class="border-b border-indigo-300 pb-2 mb-3.5 flex justify-between items-baseline">
-        <div>
-          <span class="text-sm font-black uppercase text-slate-950">{personal.name}</span>
-          <span class="text-xs text-indigo-700 font-bold ml-2">• {personal.title}</span>
-        </div>
-        <div class="text-[9px] text-slate-500">
-          <span>{personal.contacts.email} • {personal.contacts.phone} • Vilnius, Lithuania</span>
-        </div>
-      </header>
+  {/* ================================================================ */}
+  {/* ========================== PAGE 2 ============================== */}
+  {/* ================================================================ */}
+  <div class="page">
+    
+    {/* Page 2 Left Sidebar */}
+    <aside class="w-[66mm] shrink-0 bg-[#1c1f24] text-white flex flex-col justify-between">
+      <div>
+        {/* Blue accent top bar */}
+        <div class="bg-[#2764a8] h-3 w-full"></div>
 
-      {/* Main Page 2 Grid */}
-      <div class="grid grid-cols-12 gap-4 items-start">
-        
-        {/* Left Column (35%) */}
-        <aside class="col-span-4 space-y-3.5">
+        <div class="p-[5mm_6mm] space-y-4">
           
-          {/* Remaining Skills (Architecture, DB, Security) */}
-          <section class="space-y-2.5">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <Database className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Databases & Architecture
-              </h2>
-            </div>
+          {/* Section: SKILLS */}
+          <div>
+            <div class="pill-header-sidebar">Skills</div>
+            
+            <div class="space-y-2.5 text-[8.4px]">
+              
+              {/* Software Development Categories */}
+              <div>
+                <div class="font-bold text-white mb-1 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                  <span>Core & Frontend</span>
+                </div>
+                <div class="text-slate-300 pl-3 space-y-0.5 leading-snug">
+                  <div>• JavaScript (ES6+), TypeScript</div>
+                  <div>• React, React Native (Expo), Redux</div>
+                  <div>• SVG-based SCADA Visualizations</div>
+                  <div>• Web Security Hardening (CSP, CORS)</div>
+                  <div>• HTML5 / CSS3 / Tailwind</div>
+                </div>
+              </div>
 
-            <div class="space-y-2">
-              {page2SkillGroups.map((group) => (
-                <div class="space-y-1">
-                  <h3 class="text-[9.5px] font-bold uppercase tracking-wider text-indigo-800">
-                    {group.name}
-                  </h3>
-                  <div class="flex flex-wrap gap-1">
-                    {group.skills.map((skill) => (
-                      <span class="text-[8.5px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200 font-medium leading-none">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+              <div>
+                <div class="font-bold text-white mb-1 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                  <span>Backend & Architecture</span>
+                </div>
+                <div class="text-slate-300 pl-3 space-y-0.5 leading-snug">
+                  <div>• Node.js (Fastify), PHP (Phalcon 5)</div>
+                  <div>• REST API Architecture & Microservices</div>
+                  <div>• Redis / Garnet (In-Memory Stores)</div>
+                  <div>• High-Load Systems & Real-Time Data</div>
+                  <div>• LLM & AI Integration (Ollama, LM Studio)</div>
+                </div>
+              </div>
+
+              <div>
+                <div class="font-bold text-white mb-1 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                  <span>Databases & Processing</span>
+                </div>
+                <div class="text-slate-300 pl-3 space-y-0.5 leading-snug">
+                  <div>• Oracle, MariaDB, PostgreSQL</div>
+                  <div>• Complex Query Optimization & Tuning</div>
+                  <div>• Stored Procedures & Functions</div>
+                  <div>• Time-Series Data Modeling</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Section: SCALE & METRICS */}
+          <div>
+            <div class="pill-header-sidebar">Scale & Impact</div>
+            <div class="space-y-1.5 text-[8.2px] text-slate-300">
+              {metrics.map((m) => (
+                <div class="bg-slate-800/80 p-1.5 rounded border border-slate-700/60">
+                  <div class="font-bold text-blue-300">{m.value} — {m.label}</div>
+                  <div class="text-slate-400 text-[7.5px] leading-tight mt-0.5">{m.description}</div>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
 
-          {/* Education */}
-          <section class="space-y-2 pt-2 border-t border-slate-200">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <GraduationCap className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Education
-              </h2>
-            </div>
+        </div>
+      </div>
 
-            {education.map((edu) => (
-              <div class="text-[9.5px] space-y-0.5 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
-                <div class="font-bold text-slate-900">{edu.degree}</div>
-                <div class="text-indigo-700 font-medium">{edu.institution}</div>
-                <div class="text-slate-500 text-[8.5px]">{edu.period} • Vilnius/Kaunas, Lithuania</div>
+      {/* Sidebar Page 2 Footer */}
+      <div class="px-5 py-2.5 text-[8px] text-slate-400 text-center border-t border-slate-800">
+        Page 2 / 3
+      </div>
+    </aside>
+
+    {/* Page 2 Right Main Content */}
+    <main class="flex-1 bg-white text-slate-800 p-[8mm_10mm_6mm_9mm] flex flex-col justify-between">
+      <div>
+        
+        {/* Section: PROJECTS */}
+        <section class="space-y-3">
+          <div class="pill-header-main">
+            <FolderGit2 className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
+            <span>Projects</span>
+          </div>
+
+          {/* Project Items */}
+          <div class="space-y-2.5">
+            {projects.map((proj) => (
+              <div class="space-y-1 border-b border-slate-100 pb-2 last:border-b-0 last:pb-0">
+                <div class="flex items-baseline justify-between">
+                  <h3 class="font-bold text-[9.5px] text-slate-900 leading-tight">
+                    {proj.title}
+                  </h3>
+                  <span class="text-[8.2px] font-semibold text-slate-500 shrink-0 ml-2">
+                    {proj.period}
+                  </span>
+                </div>
+
+                <div class="flex flex-wrap gap-1 my-0.5">
+                  {proj.tags.slice(0, 6).map((t) => (
+                    <span class="text-[7.5px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200 font-medium">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <p class="text-[8.2px] text-slate-600 leading-snug">
+                  {proj.description}
+                </p>
+
+                <ul class="text-[8px] text-slate-700 space-y-0.5 pl-2 leading-[1.26]">
+                  {proj.bullets.map((b) => (
+                    <li class="flex items-start gap-1">
+                      <span class="text-blue-600 font-bold shrink-0">•</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
-          </section>
-
-          {/* Profile Links Box */}
-          <div class="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[9px] text-slate-600 space-y-1">
-            <div class="font-bold text-slate-900 uppercase tracking-wider text-[9.5px]">Verified Links</div>
-            <div>• Portfolio: <a href="https://vilghelm.eu" class="text-indigo-700 hover:underline">vilghelm.eu</a></div>
-            <div>• GitHub: <a href={personal.contacts.github} class="text-indigo-700 hover:underline">github.com/igoriok1994</a></div>
-            <div>• LinkedIn: <a href={personal.contacts.linkedin} class="text-indigo-700 hover:underline">linkedin.com/in/igor-vilghem</a></div>
           </div>
-        </aside>
 
-        {/* Right Column (65%) */}
-        <div class="col-span-8 space-y-3.5 border-l border-slate-200 pl-4">
+        </section>
+
+      </div>
+
+      {/* Footer Page 2 */}
+      <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8px] text-slate-400">
+        <span>{personal.name} • Curriculum Vitae</span>
+        <span>Projects & Portfolio</span>
+      </footer>
+    </main>
+
+  </div>
+
+
+  {/* ================================================================ */}
+  {/* ========================== PAGE 3 ============================== */}
+  {/* ================================================================ */}
+  <div class="page">
+    
+    {/* Page 3 Left Sidebar */}
+    <aside class="w-[66mm] shrink-0 bg-[#1c1f24] text-white flex flex-col justify-between">
+      <div>
+        {/* Blue accent top bar */}
+        <div class="bg-[#2764a8] h-3 w-full"></div>
+
+        <div class="p-[5mm_6mm] space-y-4">
           
-          {/* Role 2 (Part 2) Continued */}
-          <section class="space-y-2">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <Building className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Commercial Experience (Continued)
-              </h2>
-            </div>
-
-            <div class="space-y-1">
-              <div class="flex items-center justify-between">
-                <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                  <span>{fullStackRole.role} — Core Development & Scalability</span>
-                </h3>
-                <span class="text-[9px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
-                  2016 – 2024
-                </span>
-              </div>
-
-              <ul class="space-y-1 pl-2 text-[9.5px] text-slate-700 leading-snug">
-                {role2Part2.map((resp) => (
-                  <li class="flex items-start gap-1.5">
-                    <span class="text-indigo-600 font-bold shrink-0 mt-0.5">•</span>
-                    <span>{resp}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-
-          {/* Key Achievements */}
-          <section class="space-y-2 pt-2 border-t border-slate-200">
-            <div class="flex items-center gap-1.5 border-b border-indigo-200 pb-1">
-              <Award className="w-3.5 h-3.5 text-indigo-700" />
-              <h2 class="text-[11px] font-black uppercase tracking-wider text-slate-900">
-                Key Engineering Achievements
-              </h2>
-            </div>
-
-            <div class="space-y-1 text-[9.5px] text-slate-700">
-              {achievements.map((item) => (
-                <div class="flex items-start gap-1.5 leading-snug">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>{item}</span>
+          {/* Section: DEVOPS & INFRASTRUCTURE */}
+          <div>
+            <div class="pill-header-sidebar">DevOps & Cloud</div>
+            <div class="text-slate-300 text-[8.5px] space-y-1.5 pl-1 leading-snug">
+              {devopsSkills.skills.map((s) => (
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
+                  <span>{s}</span>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
+
+          {/* Section: LEADERSHIP & PROCESS */}
+          <div>
+            <div class="pill-header-sidebar">Leadership</div>
+            <div class="text-slate-300 text-[8.5px] space-y-1.5 pl-1 leading-snug">
+              {leadershipSkills.skills.map((s) => (
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></span>
+                  <span>{s}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section: SECURITY & AUDIT */}
+          <div>
+            <div class="pill-header-sidebar">Security & Audit</div>
+            <div class="space-y-1.5 text-[8.3px] text-slate-300">
+              <div class="bg-slate-800/80 p-2 rounded border border-slate-700/60 space-y-1">
+                <div class="font-bold text-blue-300">OWASP ZAP Remediation</div>
+                <div class="text-slate-400 text-[7.5px] leading-tight">Remediated critical backend vulnerabilities post cybersecurity audit.</div>
+              </div>
+              <div class="bg-slate-800/80 p-2 rounded border border-slate-700/60 space-y-1">
+                <div class="font-bold text-blue-300">CSP & Hardening</div>
+                <div class="text-slate-400 text-[7.5px] leading-tight">Strict Content Security Policy & IIS production security headers.</div>
+              </div>
+              <div class="bg-slate-800/80 p-2 rounded border border-slate-700/60 space-y-1">
+                <div class="font-bold text-blue-300">Rate Limiting & Token Revocation</div>
+                <div class="text-slate-400 text-[7.5px] leading-tight">Redis / Garnet distributed brute-force protection and session revocation.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section: VERIFIED LINKS */}
+          <div>
+            <div class="pill-header-sidebar">Verified Links</div>
+            <div class="space-y-1.5 text-[8.5px] text-slate-300">
+              <div>• Portfolio: <a href="https://vilghelm.eu" class="text-blue-300 hover:underline">vilghelm.eu</a></div>
+              <div>• GitHub: <a href={personal.contacts.github} class="text-blue-300 hover:underline">github.com/igoriok1994</a></div>
+              <div>• LinkedIn: <a href={personal.contacts.linkedin} class="text-blue-300 hover:underline">linkedin.com/in/igor-vilghem</a></div>
+            </div>
+          </div>
 
         </div>
+      </div>
+
+      {/* Sidebar Page 3 Footer */}
+      <div class="px-5 py-2.5 text-[8px] text-slate-400 text-center border-t border-slate-800">
+        Page 3 / 3
+      </div>
+    </aside>
+
+    {/* Page 3 Right Main Content */}
+    <main class="flex-1 bg-white text-slate-800 p-[8mm_10mm_6mm_9mm] flex flex-col justify-between">
+      <div>
+        
+        {/* Section: KEY ACHIEVEMENTS */}
+        <section class="space-y-2">
+          <div class="pill-header-main">
+            <Award className="w-3.5 h-3.5 text-[#2764a8] shrink-0" />
+            <span>Key Technical Achievements</span>
+          </div>
+
+          <div class="space-y-1.5 text-[8.6px] text-slate-700">
+            {achievements.map((item) => (
+              <div class="flex items-start gap-2 p-1.5 rounded-lg bg-slate-50/80 border border-slate-200/70 leading-snug">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                <span>
+                  <strong class="text-slate-900 font-semibold">{item.split(' ')[0]} {item.split(' ')[1]}</strong>{' '}
+                  {item.split(' ').slice(2).join(' ')}
+                </span>
+              </div>
+            ))}
+          </div>
+
+        </section>
 
       </div>
-    </div>
 
-    {/* Footer Page 2 */}
-    <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8.5px] text-slate-500">
-      <span>Igor Vilghelm • Curriculum Vitae</span>
-      <span>Page 2 of 2</span>
-    </footer>
+      {/* Footer Page 3 */}
+      <footer class="pt-2 border-t border-slate-200 flex justify-between items-center text-[8px] text-slate-400">
+        <span>{personal.name} • Curriculum Vitae</span>
+        <span>Key Achievements & Summary</span>
+      </footer>
+    </main>
+
   </div>
 
   {/* Auto-trigger print when URL has ?auto=true */}
