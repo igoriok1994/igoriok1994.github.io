@@ -7,12 +7,21 @@ import { cvData } from '../data/cv';
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string;
+  noindex?: boolean;
 }
 
 const {
   title = `${cvData.personal.name} | Senior Full-Stack Developer & Team Lead`,
-  description = cvData.personal.about.summary
+  description = cvData.personal.about.summary,
+  canonical,
+  noindex = false,
 } = Astro.props;
+
+const siteUrl = 'https://cv.vilghelm.eu';
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonicalUrl = canonical || (pathname === '/' ? `${siteUrl}/` : `${siteUrl}${pathname}`);
+const ogImageUrl = `${siteUrl}/avatar.jpg`;
 ---
 
 <!doctype html>
@@ -26,12 +35,53 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content={cvData.personal.name} />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
+    <link rel="canonical" href={canonicalUrl} />
 
     {/* Open Graph */}
+    <meta property="og:site_name" content={`${cvData.personal.name} CV & Portfolio`} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/avatar.jpg" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={cvData.personal.name} />
+    <meta property="og:locale" content="en_US" />
+
+    {/* Twitter / X */}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {/* Structured Data: Schema.org JSON-LD */}
+    <script type="application/ld+json" is:inline set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": `${canonicalUrl}#webpage`,
+          "url": canonicalUrl,
+          "name": title,
+          "description": description,
+          "mainEntity": {
+            "@type": "Person",
+            "@id": "https://cv.vilghelm.eu/#person",
+            "name": cvData.personal.name,
+            "jobTitle": cvData.personal.role,
+            "url": "https://cv.vilghelm.eu/",
+            "image": ogImageUrl,
+            "description": cvData.personal.about.summary,
+            "sameAs": [
+              "https://github.com/igoriok1994",
+              "https://www.linkedin.com/in/igor-vilghem-8ab819139/",
+              "https://vilghelm.eu",
+              "https://nextjs.lt"
+            ]
+          }
+        }
+      ]
+    })} />
 
     {/* Inline script to prevent theme flash */}
     <script is:inline>

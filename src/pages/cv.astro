@@ -21,7 +21,10 @@ import { GithubIcon } from '../components/SocialIcons';
 const { personal, experience, achievements, skillGroups, education, languages } = cvData;
 ---
 
-<Layout title={`Curriculum Vitae | ${personal.name}`}>
+<Layout 
+  title={`Curriculum Vitae | ${personal.name}`}
+  description={`Complete commercial experience, technical leadership, and engineering achievements of ${personal.name} — Senior Full-Stack Developer & Team Lead.`}
+>
   <div class="space-y-12">
     
     {/* Page Action Bar */}

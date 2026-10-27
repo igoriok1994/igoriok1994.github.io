@@ -7,7 +7,10 @@ import { Layers, FileDown } from 'lucide-react';
 const { personal, projects } = cvData;
 ---
 
-<Layout title={`Engineering Projects | ${personal.name}`}>
+<Layout 
+  title={`Engineering Projects | ${personal.name}`}
+  description={`Portfolio of enterprise, mobile, SCADA, and high-load projects designed and delivered by ${personal.name} over 10+ years.`}
+>
   <div class="space-y-10">
     
     {/* Page Header */}
