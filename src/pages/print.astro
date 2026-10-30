@@ -9,7 +9,8 @@ import {
   Download,
   Briefcase,
   User,
-  FolderGit2
+  FolderGit2,
+  FileText
 } from 'lucide-react';
 
 const { personal, experience, achievements, education, projects } = cvData;
@@ -55,74 +56,12 @@ const fullStackRole = company.roles[1];
       margin: 0;
     }
 
-    @media print {
-      html, body {
-        background: #ffffff !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      .no-print {
-        display: none !important;
-      }
-
-      .page {
-        width: 210mm !important;
-        height: 297mm !important;
-        max-height: 297mm !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        border: none !important;
-        page-break-after: always !important;
-        break-after: page !important;
-        overflow: hidden !important;
-        display: flex !important;
-        flex-direction: row !important;
-        background: #ffffff !important;
-      }
-
-      .page:last-child {
-        page-break-after: auto !important;
-        break-after: auto !important;
-      }
-
-      a {
-        color: inherit !important;
-        text-decoration: none !important;
-      }
-    }
-
-    @media screen {
-      body {
-        background-color: #0c1017;
-        color: #1e293b;
-        min-height: 100vh;
-        padding-bottom: 40px;
-      }
-
-      .page {
-        width: 210mm;
-        height: 297mm;
-        max-height: 297mm;
-        margin: 24px auto;
-        background: #ffffff;
-        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
-        border-radius: 4px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: row;
-      }
-    }
-
-    /* Screen Floating Action Bar */
+    /* Screen Floating Action Bar (Base) */
     .screen-bar {
       position: sticky;
       top: 12px;
       z-index: 50;
-      max-width: 580px;
+      max-width: 620px;
       margin: 12px auto;
       padding: 10px 16px;
       background: rgba(15, 23, 42, 0.95);
@@ -144,6 +83,17 @@ const fullStackRole = company.roles[1];
       font-weight: 500;
       color: #cbd5e1;
       text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .btn-back:hover {
+      color: #ffffff;
+    }
+
+    .screen-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-print {
@@ -159,6 +109,11 @@ const fullStackRole = company.roles[1];
       border: none;
       cursor: pointer;
       box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      transition: background 0.15s ease;
+    }
+
+    .btn-print:hover {
+      background: #1d4ed8;
     }
 
     .btn-download {
@@ -173,9 +128,25 @@ const fullStackRole = company.roles[1];
       color: #f1f5f9;
       border: 1px solid #334155;
       text-decoration: none;
+      transition: all 0.15s ease;
     }
 
-    /* Left Sidebar */
+    .btn-download:hover {
+      background: #334155;
+      color: #ffffff;
+    }
+
+    .btn-toggle-view {
+      display: none;
+    }
+
+    /* Base Layout */
+    .page {
+      background: #ffffff;
+      display: flex;
+      flex-direction: row;
+    }
+
     .sidebar {
       width: 66mm;
       flex-shrink: 0;
@@ -231,7 +202,6 @@ const fullStackRole = company.roles[1];
       margin-bottom: 9px;
     }
 
-    /* Main Column */
     .main-col {
       width: 144mm;
       flex: 1;
@@ -280,6 +250,426 @@ const fullStackRole = company.roles[1];
     .pill-main.first {
       margin-top: 0;
     }
+
+    .mobile-header-name,
+    .mobile-page-badge {
+      display: none;
+    }
+
+    .desktop-name-header {
+      display: block;
+    }
+
+    /* ================================================================ */
+    /* ==================== DESKTOP SCREEN STYLES ===================== */
+    /* ================================================================ */
+    @media screen {
+      body {
+        background-color: #0c1017;
+        color: #1e293b;
+        min-height: 100vh;
+        padding-bottom: 40px;
+      }
+
+      .page {
+        width: 210mm;
+        height: 297mm;
+        max-height: 297mm;
+        margin: 24px auto;
+        background: #ffffff;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+        border-radius: 4px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
+    /* ================================================================ */
+    /* ==================== MOBILE SCREEN STYLES ====================== */
+    /* ================================================================ */
+    @media screen and (max-width: 820px) {
+      body {
+        background-color: #0b0f17 !important;
+        padding-bottom: 30px !important;
+        overflow-x: hidden !important;
+      }
+
+      /* Floating Action Bar on Mobile */
+      .screen-bar {
+        position: sticky !important;
+        top: 8px !important;
+        margin: 8px 10px 16px !important;
+        padding: 8px 10px !important;
+        max-width: 100% !important;
+        border-radius: 12px !important;
+        gap: 6px !important;
+      }
+
+      .btn-back {
+        font-size: 11.5px !important;
+        gap: 4px !important;
+        padding: 4px 6px !important;
+      }
+
+      .screen-bar-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+
+      .btn-print {
+        padding: 6px 10px !important;
+        font-size: 11.5px !important;
+        gap: 5px !important;
+      }
+
+      .btn-download {
+        padding: 6px 10px !important;
+        font-size: 11.5px !important;
+        gap: 5px !important;
+      }
+
+      .btn-toggle-view {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        padding: 6px 10px !important;
+        font-size: 11.5px !important;
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        background: #334155 !important;
+        color: #f8fafc !important;
+        border: 1px solid #475569 !important;
+        cursor: pointer !important;
+      }
+
+      /* Page container on Mobile */
+      .page {
+        width: calc(100% - 20px) !important;
+        max-width: 620px !important;
+        height: auto !important;
+        max-height: none !important;
+        margin: 16px auto !important;
+        border-radius: 14px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45) !important;
+      }
+
+      /* Page Number Badge on Mobile */
+      .mobile-page-badge {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        padding: 9px 16px;
+        background: #0f172a;
+        color: #94a3b8;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      /* Page 1: Sidebar */
+      .page-1 .sidebar {
+        width: 100% !important;
+        background-color: #191b1f !important;
+      }
+
+      .page-1 .sidebar-blue-header {
+        height: auto !important;
+        padding: 22px 16px 18px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 16px !important;
+        background-color: #2464aa !important;
+        text-align: left !important;
+      }
+
+      .page-1 .avatar-circle {
+        width: 76px !important;
+        height: 76px !important;
+        min-width: 76px !important;
+        border: 2.5px solid rgba(255, 255, 255, 0.7) !important;
+      }
+
+      .mobile-header-name {
+        display: block !important;
+        color: #ffffff !important;
+      }
+
+      .mobile-header-name h1 {
+        font-family: 'Poppins', sans-serif !important;
+        font-size: 22px !important;
+        font-weight: 800 !important;
+        line-height: 1.15 !important;
+        color: #ffffff !important;
+      }
+
+      .mobile-header-name p {
+        font-family: 'Lato', sans-serif !important;
+        font-size: 13.5px !important;
+        color: #bfdbfe !important;
+        margin-top: 2px !important;
+      }
+
+      /* Hide redundant name in main-col on mobile */
+      .page-1 .desktop-name-header {
+        display: none !important;
+      }
+
+      .page-1 .sidebar-body {
+        padding: 18px 16px 22px !important;
+        gap: 16px !important;
+      }
+
+      /* Main Column on Mobile */
+      .main-col {
+        width: 100% !important;
+        padding: 22px 18px 26px !important;
+        background-color: #ffffff !important;
+      }
+
+      /* Pills on Mobile */
+      .pill-main {
+        font-size: 12px !important;
+        padding: 5px 14px !important;
+        margin-top: 18px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .pill-main.first {
+        margin-top: 0 !important;
+      }
+
+      .pill-sidebar {
+        font-size: 12px !important;
+        padding: 4px 12px !important;
+        margin-bottom: 8px !important;
+      }
+
+      /* Readable typography on Mobile */
+      .about-desc {
+        font-size: 13px !important;
+        line-height: 1.55 !important;
+        color: #334155 !important;
+        gap: 8px !important;
+      }
+
+      .resp-list {
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+        padding-left: 18px !important;
+        gap: 4px !important;
+      }
+
+      /* Page 2 on Mobile */
+      .page-2 .sidebar {
+        width: 100% !important;
+        background-color: #191b1f !important;
+      }
+
+      .page-2 .sidebar-body {
+        padding: 18px 16px !important;
+        gap: 14px !important;
+      }
+
+      .project-bullets {
+        font-size: 12px !important;
+        line-height: 1.45 !important;
+        padding-left: 18px !important;
+        gap: 3px !important;
+      }
+
+      /* Page 3 on Mobile */
+      .page-3 .sidebar {
+        display: none !important; /* Hide empty sidebar on mobile! */
+      }
+
+      .page-3 .main-col {
+        width: 100% !important;
+        padding: 22px 18px 26px !important;
+      }
+
+      .achievement-bullets {
+        font-size: 12.5px !important;
+        line-height: 1.5 !important;
+        padding-left: 18px !important;
+        gap: 8px !important;
+      }
+
+      /* Sheet View Mode (scale-to-fit) when toggled */
+      body.view-sheet {
+        overflow-x: auto !important;
+      }
+
+      body.view-sheet .page {
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        flex-direction: row !important;
+        margin: 16px auto !important;
+        border-radius: 4px !important;
+        zoom: calc((100vw - 20px) / 794px) !important;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55) !important;
+      }
+
+      body.view-sheet .mobile-page-badge {
+        display: none !important;
+      }
+
+      body.view-sheet .mobile-header-name {
+        display: none !important;
+      }
+
+      body.view-sheet .desktop-name-header {
+        display: block !important;
+      }
+
+      body.view-sheet .page-1 .sidebar-blue-header {
+        height: 66mm !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+      }
+
+      body.view-sheet .page-1 .avatar-circle {
+        width: 40mm !important;
+        height: 40mm !important;
+        min-width: 40mm !important;
+      }
+
+      body.view-sheet .sidebar {
+        width: 66mm !important;
+        display: flex !important;
+      }
+
+      body.view-sheet .page-3 .sidebar {
+        display: flex !important;
+      }
+
+      body.view-sheet .main-col {
+        width: 144mm !important;
+        padding: 9mm 13mm 8mm 11mm !important;
+      }
+
+      body.view-sheet .about-desc {
+        font-size: 11.2px !important;
+        line-height: 1.46 !important;
+        gap: 6px !important;
+      }
+
+      body.view-sheet .resp-list {
+        font-size: 10.2px !important;
+        line-height: 1.36 !important;
+        padding-left: 15px !important;
+        gap: 2px !important;
+      }
+
+      body.view-sheet .project-bullets {
+        font-size: 10px !important;
+        line-height: 1.34 !important;
+        padding-left: 15px !important;
+        gap: 1.5px !important;
+      }
+
+      body.view-sheet .achievement-bullets {
+        font-size: 11px !important;
+        line-height: 1.42 !important;
+        padding-left: 15px !important;
+        gap: 6px !important;
+      }
+    }
+
+    /* ================================================================ */
+    /* ==================== EXACT PRINT / PDF STYLES ================== */
+    /* ================================================================ */
+    @media print {
+      html, body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .mobile-page-badge {
+        display: none !important;
+      }
+
+      .mobile-header-name {
+        display: none !important;
+      }
+
+      .desktop-name-header {
+        display: block !important;
+      }
+
+      .page {
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: row !important;
+        background: #ffffff !important;
+        zoom: 1 !important;
+      }
+
+      .page:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+
+      .sidebar {
+        width: 66mm !important;
+        display: flex !important;
+        flex-direction: column !important;
+        background-color: #191b1f !important;
+      }
+
+      .sidebar-blue-header {
+        height: 66mm !important;
+        padding: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: #2464aa !important;
+      }
+
+      .avatar-circle {
+        width: 40mm !important;
+        height: 40mm !important;
+      }
+
+      .main-col {
+        width: 144mm !important;
+        padding: 9mm 13mm 8mm 11mm !important;
+        display: flex !important;
+        flex-direction: column !important;
+      }
+
+      a {
+        color: inherit !important;
+        text-decoration: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -288,18 +678,23 @@ const fullStackRole = company.roles[1];
   <div class="no-print screen-bar">
     <a href="/cv" class="btn-back">
       <ArrowLeft size={14} />
-      <span>Back to Site</span>
+      <span>Back</span>
     </a>
 
-    <div style="display: flex; align-items: center; gap: 8px;">
+    <div class="screen-bar-actions">
+      <button type="button" id="toggle-view-btn" class="btn-toggle-view" title="Toggle between mobile view and A4 sheet layout">
+        <FileText size={13} />
+        <span id="toggle-view-text">A4 Sheet</span>
+      </button>
+
       <button type="button" onclick="window.print()" class="btn-print">
         <Printer size={14} />
-        <span>Print / Save as PDF</span>
+        <span>Print</span>
       </button>
 
       <a href="/cv.pdf" download="Igor_Vilghelm_CV.pdf" class="btn-download">
         <Download size={14} />
-        <span>Download PDF</span>
+        <span>PDF</span>
       </a>
     </div>
   </div>
@@ -307,7 +702,11 @@ const fullStackRole = company.roles[1];
   {/* ================================================================ */}
   {/* ========================== PAGE 1 ============================== */}
   {/* ================================================================ */}
-  <div class="page">
+  <div class="page page-1">
+    <div class="mobile-page-badge">
+      <span>Page 1 / 3</span>
+      <span>Profile & Experience</span>
+    </div>
     
     {/* Page 1 Left Sidebar */}
     <aside class="sidebar">
@@ -318,6 +717,10 @@ const fullStackRole = company.roles[1];
             src={personal.avatarUrl} 
             alt={personal.name} 
           />
+        </div>
+        <div class="mobile-header-name">
+          <h1>{personal.name}</h1>
+          <p>Full stack developer</p>
         </div>
       </div>
 
@@ -370,8 +773,8 @@ const fullStackRole = company.roles[1];
 
     {/* Page 1 Right Main Content */}
     <main class="main-col">
-      {/* Name & Title Header */}
-      <div style="margin-bottom: 12px;">
+      {/* Name & Title Header (Desktop / Print) */}
+      <div class="desktop-name-header" style="margin-bottom: 12px;">
         <h1 class="main-name">
           {personal.name}
         </h1>
@@ -386,7 +789,7 @@ const fullStackRole = company.roles[1];
           <User size={16} color="#2464aa" />
           <span>About Me</span>
         </div>
-        <div style="font-size: 11.2px; color: #334155; line-height: 1.46; display: flex; flex-direction: column; gap: 6px;">
+        <div class="about-desc" style="font-size: 11.2px; color: #334155; line-height: 1.46; display: flex; flex-direction: column; gap: 6px;">
           <p>{personal.about.summary}</p>
           <p>{personal.about.details[0]}</p>
           <p>{personal.about.details[1]}</p>
@@ -414,7 +817,7 @@ const fullStackRole = company.roles[1];
           <div style="font-size: 11px; font-weight: 700; color: #1e2530; margin-bottom: 3px;">
             {teamLeadRole.role} ({teamLeadRole.period})
           </div>
-          <ul style="list-style: disc; padding-left: 15px; font-size: 10.2px; color: #334155; line-height: 1.36; display: flex; flex-direction: column; gap: 2px;">
+          <ul class="resp-list" style="list-style: disc; padding-left: 15px; font-size: 10.2px; color: #334155; line-height: 1.36; display: flex; flex-direction: column; gap: 2px;">
             {teamLeadRole.responsibilities.map((resp) => (
               <li>{resp}</li>
             ))}
@@ -426,7 +829,7 @@ const fullStackRole = company.roles[1];
           <div style="font-size: 11px; font-weight: 700; color: #1e2530; margin-bottom: 3px;">
             {fullStackRole.role} ({fullStackRole.period})
           </div>
-          <ul style="list-style: disc; padding-left: 15px; font-size: 10.2px; color: #334155; line-height: 1.36; display: flex; flex-direction: column; gap: 2px;">
+          <ul class="resp-list" style="list-style: disc; padding-left: 15px; font-size: 10.2px; color: #334155; line-height: 1.36; display: flex; flex-direction: column; gap: 2px;">
             {fullStackRole.responsibilities.map((resp) => (
               <li>{resp}</li>
             ))}
@@ -441,7 +844,11 @@ const fullStackRole = company.roles[1];
   {/* ================================================================ */}
   {/* ========================== PAGE 2 ============================== */}
   {/* ================================================================ */}
-  <div class="page">
+  <div class="page page-2">
+    <div class="mobile-page-badge">
+      <span>Page 2 / 3</span>
+      <span>Skills & Projects</span>
+    </div>
     
     {/* Page 2 Left Sidebar */}
     <aside class="sidebar">
@@ -538,7 +945,7 @@ const fullStackRole = company.roles[1];
               <div style="font-size: 11px; font-weight: 700; color: #0f172a; margin-bottom: 2px;">
                 {proj.title} ({proj.period})
               </div>
-              <ul style="list-style: disc; padding-left: 15px; font-size: 10px; color: #334155; line-height: 1.34; display: flex; flex-direction: column; gap: 1.5px;">
+              <ul class="project-bullets" style="list-style: disc; padding-left: 15px; font-size: 10px; color: #334155; line-height: 1.34; display: flex; flex-direction: column; gap: 1.5px;">
                 {proj.bullets.map((b) => (
                   <li>{b}</li>
                 ))}
@@ -555,7 +962,11 @@ const fullStackRole = company.roles[1];
   {/* ================================================================ */}
   {/* ========================== PAGE 3 ============================== */}
   {/* ================================================================ */}
-  <div class="page">
+  <div class="page page-3">
+    <div class="mobile-page-badge">
+      <span>Page 3 / 3</span>
+      <span>Key Achievements</span>
+    </div>
     
     {/* Page 3 Left Sidebar */}
     <aside class="sidebar">
@@ -570,7 +981,7 @@ const fullStackRole = company.roles[1];
           <span>Key Achievements</span>
         </div>
 
-        <ul style="list-style: disc; padding-left: 15px; font-size: 11px; color: #334155; line-height: 1.42; display: flex; flex-direction: column; gap: 6px; margin-top: 7px;">
+        <ul class="achievement-bullets" style="list-style: disc; padding-left: 15px; font-size: 11px; color: #334155; line-height: 1.42; display: flex; flex-direction: column; gap: 6px; margin-top: 7px;">
           {achievements.map((item) => (
             <li>{item}</li>
           ))}
@@ -580,8 +991,20 @@ const fullStackRole = company.roles[1];
 
   </div>
 
-  {/* Auto-trigger print when URL has ?auto=true */}
+  {/* Scripts */}
   <script is:inline>
+    // View Toggle on Mobile: Responsive vs Scaled A4 Sheet
+    const toggleBtn = document.getElementById('toggle-view-btn');
+    const toggleText = document.getElementById('toggle-view-text');
+
+    if (toggleBtn && toggleText) {
+      toggleBtn.addEventListener('click', () => {
+        const isSheet = document.body.classList.toggle('view-sheet');
+        toggleText.textContent = isSheet ? 'Mobile' : 'A4 Sheet';
+      });
+    }
+
+    // Auto-trigger print when URL has ?auto=true
     (function() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('auto') === 'true') {
