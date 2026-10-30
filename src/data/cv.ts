@@ -66,7 +66,7 @@ export const cvData = {
       email: "igoriok19944@gmail.com",
       location: "Vilnius, Lithuania",
       github: "https://github.com/igoriok1994",
-      linkedin: "https://www.linkedin.com/in/igor-vilghem-8ab819139/",
+      linkedin: "https://www.linkedin.com/in/igor-vilghelm-8ab819139/",
       telegram: "https://t.me/ccg007agent",
     } as ContactInfo,
     about: {
