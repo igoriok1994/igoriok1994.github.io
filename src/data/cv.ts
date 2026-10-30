@@ -57,6 +57,16 @@ export interface LanguageItem {
 export const cvData = {
   personal: {
     name: "Igor Vilghelm",
+    alternateNames: [
+      "Igor Vilghelm",
+      "Vilghelm",
+      "Igor Vilhelm",
+      "Vilhelm",
+      "Игорь Вильгельм",
+      "Igoris Vilghelmas",
+      "Igoris Vilhelmas",
+      "igoriok1994"
+    ],
     title: "Senior Full-Stack Developer / Team Lead",
     location: "Vilnius, Lithuania",
     avatarUrl: "/avatar.jpg",

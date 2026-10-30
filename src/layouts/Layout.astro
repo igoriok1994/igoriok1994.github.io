@@ -66,17 +66,20 @@ const ogImageUrl = `${siteUrl}/avatar.jpg`;
           "description": description,
           "mainEntity": {
             "@type": "Person",
-            "@id": "https://cv.vilghelm.eu/#person",
+            "@id": "https://vilghelm.eu/#person",
             "name": cvData.personal.name,
-            "jobTitle": cvData.personal.role,
-            "url": "https://cv.vilghelm.eu/",
+            "alternateName": cvData.personal.alternateNames,
+            "jobTitle": cvData.personal.title,
+            "url": "https://vilghelm.eu",
             "image": ogImageUrl,
             "description": cvData.personal.about.summary,
             "sameAs": [
+              "https://vilghelm.eu",
+              "https://cv.vilghelm.eu",
+              "https://nextjs.lt",
               "https://github.com/igoriok1994",
               "https://www.linkedin.com/in/igor-vilghelm-8ab819139/",
-              "https://vilghelm.eu",
-              "https://nextjs.lt"
+              "https://t.me/ccg007agent"
             ]
           }
         }
